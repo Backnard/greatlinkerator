@@ -1,12 +1,13 @@
-const { db } = require('./index');
+const { db, createLink, updateLink, createTags, createLinkTags, addTagsToLink } = require('./index');
 
 async function dropTables() {
 console.log('Entered seed.js dropTable');
    try {
     await db.query(`
-    DROP TABLE IF EXISTS links;
-    DROP TABLE IF EXISTS tags;
     DROP TABLE IF EXISTS links_tags;
+    DROP TABLE IF EXISTS tags;
+    DROP TABLE IF EXISTS links;
+    
 `)
 
 console.log('successfully dropped all tables!');
@@ -28,7 +29,7 @@ async function createDB() {
             url VARCHAR(255) UNIQUE,
             clicks INTEGER,
             comments TEXT, 
-            share_date DATE
+            share_date DATE DEFAULT CURRENT_TIMESTAMP
         );
         `);
         console.log('links table created');
@@ -36,7 +37,7 @@ async function createDB() {
         const tags = await db.query(`
         CREATE TABLE tags(
             id SERIAL PRIMARY KEY,
-            tags VARCHAR(255) UNIQUE NOT NULL
+            name VARCHAR(255) UNIQUE NOT NULL
         );
         `)
         console.log('tags table created');
@@ -56,8 +57,20 @@ async function createDB() {
     } catch (error) {
         throw error;
     }
- 
 
+}
+
+async function testDB() {
+    
+    await createLink({url:'www.google.com', comment:'best place to go'});
+
+    await updateLink(1, {comments: 'They own the world', clicks: 52});
+
+    const tags = await createTags(['I need a job', 'Pay me lots of money', 'Will do SQL for Money']);
+
+    console.log('created Tags:', tags);
+    
+    await addTagsToLink(1,tags);
 }
 
 
@@ -68,6 +81,7 @@ async function seed() {
     console.log('db connected');
     await dropTables();
     await createDB();
+    await testDB();
    } catch (error) {
        throw error;
    } 
