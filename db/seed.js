@@ -19,38 +19,36 @@ console.log('successfully dropped all tables!');
 async function createDB() {
     console.log('Entered seed.js createDB');
     try {
+
+
         const links = await db.query(`
         CREATE TABLE
         links(
-            id SERIAL PRIMARY KEY
-            url VARCHAR(255) UNIQUE
-            clicks INTEGER
-            comments TEXT 
-            share_date DATE;
-        )
+            id SERIAL PRIMARY KEY,
+            url VARCHAR(255) UNIQUE,
+            clicks INTEGER,
+            comments TEXT, 
+            share_date DATE
+        );
         `);
         console.log('links table created');
     
         const tags = await db.query(`
-        CREATE TABLE
-        tags(
-            id SERIAL PRIMARY KEY
-            tags VARCHAR(255) NOT NULL
-            ON CONFLICT(tags) DO NOTHING 
-            RETURNING *;
-        )
+        CREATE TABLE tags(
+            id SERIAL PRIMARY KEY,
+            tags VARCHAR(255) UNIQUE NOT NULL
+        );
         `)
         console.log('tags table created');
 
         const links_tags = await db.query(`
         CREATE TABLE
         links_tags(
-            id SERIAL PRIMARY KEY
-            tags_id REFERENCES tags(id)
-            links_id REFERENCES links(id)
-            ON CONFLICT (tags_id, links_id) DO NOTHING
-            RETURNING *;
-        )
+            id SERIAL PRIMARY KEY,
+            tags_id INTEGER REFERENCES tags(id),
+            links_id INTEGER REFERENCES links(id),
+            UNIQUE(tags_id, links_id)
+        );
         `)
 
         console.log('link_tags table created!');
@@ -65,8 +63,10 @@ async function createDB() {
 
 async function seed() {
    try {
-    db.connect()
-    // await dropTables();
+    console.log('starting db...');
+    db.connect();
+    console.log('db connected');
+    await dropTables();
     await createDB();
    } catch (error) {
        throw error;
@@ -76,4 +76,7 @@ async function seed() {
 
 seed()
     .catch(console.error)
-    .finally(db.end());
+    .finally(()=>{
+        db.end();
+    })
+
