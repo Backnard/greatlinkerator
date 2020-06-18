@@ -32,7 +32,7 @@ async function createQueryStrings(fields) {
     return { setString, queryString  };
 }
 
-async function updateLink(linkid, fields={}) {
+async function updateLink(linkId, fields={}) {
     try {
         console.log('Entered db updateLink');
 
@@ -41,7 +41,7 @@ async function updateLink(linkid, fields={}) {
         const { rows:[link] } = await db.query(`
         UPDATE links
         SET ${setString}
-        WHERE id = ${linkid}
+        WHERE id = ${linkId}
         RETURNING *;
         `, queryString)
 
