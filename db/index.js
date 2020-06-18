@@ -143,7 +143,16 @@ async function getLinkById(linkId) {
     return links;
 }
 
+async function getAllLinks() {
+    console.log('Entered db getAllLinks');
 
+    const { rows: [links] } = db.query(`
+        SELECT * FROM links;
+    `)
+
+    console.log('All Links:', link);
+    return links;
+}
 
 
 module.exports= { 
@@ -152,4 +161,6 @@ module.exports= {
     updateLink,
     createTags,
     createLinkTags,
-    addTagsToLink }; 
+    addTagsToLink,
+    getAllLinks
+ }; 
