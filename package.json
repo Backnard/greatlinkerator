@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "react-scripts start",
     "seed:dev": "node-dev --respawn ./db/seed.js",
-    "server:dev": "node-dev --respawn ./src/api/index.js"
+    "server:dev": "node-dev --respawn ./index.js"
   },
   "keywords": [],
   "author": "",
