@@ -1,5 +1,11 @@
-require('dotenv').config();
+const express = require('express');
 
-const server = require('express');
-const apiRouter = server.Router();
+const apiRouter = express.Router();
+
+apiRouter.use('/', (req, res, next)=>{
+    res.send('Entering /api successfully');
+})
+
+
+module.exports= apiRouter;
 
