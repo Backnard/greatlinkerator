@@ -154,6 +154,32 @@ async function getAllLinks() {
     return links;
 }
 
+async function deleteLink(linkId) {
+    //delete link, delete linktags
+    console.log('Entered bd deleteLink');
+    try {
+        const { rows: linkTags } = await db.query(`
+        DELETE FROM links_tags
+        WHERE links_id = ${linkId}
+        RETURNING *;
+        `)
+    
+        const { rows: [link] } = await db.query(`
+        DELETE FROM links
+        WHERE id=${linkId}
+        RETURNING *;
+        `)
+        console.log('Deleted link: ', link, 'tags: ',linkTags);
+
+        return link;
+
+    } catch (error) {
+        throw error;
+    }
+
+
+}
+
 
 module.exports= { 
     db, 
@@ -162,5 +188,6 @@ module.exports= {
     createTags,
     createLinkTags,
     addTagsToLink,
-    getAllLinks
+    getAllLinks,
+    deleteLink
  }; 

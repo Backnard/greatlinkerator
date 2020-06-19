@@ -12,6 +12,7 @@ linkRouter.get("/", async (req, res, next) => {
     console.log('successfully retrieved all links: ', links);
   res.send({
     links,
+    status:true
   });
 });
 

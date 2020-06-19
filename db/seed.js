@@ -1,4 +1,4 @@
-const { db, createLink, updateLink, createTags, createLinkTags, addTagsToLink } = require('./index');
+const { db, createLink, updateLink, createTags, createLinkTags, addTagsToLink, deleteLink } = require('./index');
 
 async function dropTables() {
 console.log('Entered seed.js dropTable');
@@ -71,6 +71,8 @@ async function testDB() {
     console.log('created Tags:', tags);
     
     await addTagsToLink(1,tags);
+
+    await deleteLink(1);
 }
 
 
