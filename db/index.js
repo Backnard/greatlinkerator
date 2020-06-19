@@ -146,11 +146,11 @@ async function getLinkById(linkId) {
 async function getAllLinks() {
     console.log('Entered db getAllLinks');
 
-    const { rows: [links] } = db.query(`
+    const { rows: [links] } = await db.query(`
         SELECT * FROM links;
     `)
 
-    console.log('All Links:', link);
+    console.log('All Links:', links);
     return links;
 }
 

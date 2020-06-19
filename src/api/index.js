@@ -1,21 +1,20 @@
+require('dotenv').config();
+
 const express = require('express');
 
 const apiRouter = express.Router();
 
-apiRouter.use('/', (req, res, next)=>{
-    res.send('Entering /api successfully');
-})
-
-
-module.exports= apiRouter;
-
 apiRouter.get('/', async(req, res, next) => {
     res.send({message: 'Successfully reached /api'});
-    res.end();
+    
+    next();
 })
 
-const linksRouter = require('./links');
-apiRouter.use('/links', linksRouter);
+const linkRouter = require('./links');
+apiRouter.use('/links', linkRouter);
 
 const tagsRouter = require('./tags');
 apiRouter.use('/tags', tagsRouter);
+
+
+module.exports= apiRouter;

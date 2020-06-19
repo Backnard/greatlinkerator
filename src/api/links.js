@@ -1,12 +1,15 @@
-const express = require("express");
+
+const express = require('express');
 const { getAllLinks, createLink,createLinkTags, updateLink } = require("../../db");
 const linkRouter = express.Router();
 
 // GET /api/links
 ///Router for GET LINKS(by P.V.)
-linkRouter.get("/", async (req, res) => {
-  const links = await getAllLinks();
+linkRouter.get("/", async (req, res, next) => {
 
+    console.log('Entered /links GET')
+  const links = await getAllLinks();
+    console.log('successfully retrieved all links: ', links);
   res.send({
     links,
   });
