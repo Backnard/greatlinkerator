@@ -84014,28 +84014,28 @@ __webpack_require__.r(__webpack_exports__);
 const LinksList = ({
   linksArray
 }) => {
-  const [links, setlinks] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  const [links, setLinks] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/links').then(resp => {
-      console.log('Entered Components links. Returning links:', resp.data.links);
-      return setlinks(resp.data.links);
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/links").then(resp => {
+      console.log("Entered Components links. Returning links:", resp.data.links);
+      return setLinks(resp.data.links);
     });
   }, []);
-  console.log('Links from setLinks is:', links);
+  console.log("Links from setLinks is:", links);
+  const testArray = ["brian", "patrick", "Sean"];
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"], null, links.map(({
     id,
     url,
     clicks,
     comments
   }) => {
-    /*#__PURE__*/
-    react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, {
       key: id
     }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
       name: "marker"
     }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
       as: "a"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, null, "AM I BEING RETURNED?", comments)));
+    }, url), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, null, comments)));
   }));
 };
 
