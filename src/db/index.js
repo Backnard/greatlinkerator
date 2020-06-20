@@ -176,10 +176,21 @@ async function deleteLink(linkId) {
     } catch (error) {
         throw error;
     }
-
-
 }
-
+async function getLinkByUrl(url) {
+try{
+    console.log("entered getLINKbyURL")
+    const {rows } = await db.query(`
+    SELECT *
+    FROM links
+    WHERE url LIKE '%${url}%';
+    `)
+    console.log("HERE ARE YOUR URL ROWS", rows)
+    return rows;
+}catch(e){
+    throw e
+}
+};
 
 module.exports= { 
     db, 
@@ -189,5 +200,6 @@ module.exports= {
     createLinkTags,
     addTagsToLink,
     getAllLinks,
-    deleteLink
+    deleteLink,
+    getLinkByUrl
  }; 

@@ -9,7 +9,6 @@
     "seed:dev": "node-dev --respawn ./src/db/seed.js",
     "server:dev": "node-dev --respawn ./index.js",
     "build": "webpack --mode=\"production\""
-
   },
   "keywords": [],
   "author": "",

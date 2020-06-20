@@ -8,7 +8,8 @@ import {
 } from 'react-router-dom';
 
 import LinksList from './components/links';
-
+import { SearchResult } from 'semantic-ui-react';
+import SearchBar from './components/SearchBar';
 
 const App =()=>{
 
@@ -16,6 +17,7 @@ const App =()=>{
        <Router>
             <div>
                 <h1>Hello Patrick!</h1>
+                <SearchBar/>
                 <LinksList/>
             </div>
        </Router>     
