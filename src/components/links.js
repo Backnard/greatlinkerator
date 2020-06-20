@@ -3,13 +3,16 @@ import { List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const LinksList = async ({ linksArray }) => {
+const LinksList =  ({ linksArray }) => {
+  const [links, setlinks] = useState([]);
 
   useEffect(()=>{
-    const [links, setlinks] = useState([]);
-    const resp = await axios.get('http://localhost:3001/api/links');
-    console.log('retrieved linkslist from links component:',resp);
-    setlinks([resp]);
+    
+    axios.get('/api/links')
+    .then((resp)=>{
+      return setlinks(resp.data.links)
+    });
+
   }, []);
 
 
@@ -20,7 +23,7 @@ const LinksList = async ({ linksArray }) => {
           <List.Item>
             <List.Icon name='marker' />
             <List.Content>
-              <List.Header as='a'>{url}</List.Header>
+              <List.Header as='a'>Why arent you showing up?</List.Header>
               <List.Description>
                 {comments}
               </List.Description>
