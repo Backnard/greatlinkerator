@@ -7,6 +7,8 @@ import {
     Link
 } from 'react-router-dom';
 
+import LinksList from './components/links';
+
 
 const App =()=>{
 
@@ -14,6 +16,7 @@ const App =()=>{
        <Router>
             <div>
                 <h1>Hello Patrick!</h1>
+                <LinksList/>
             </div>
        </Router>     
    );
