@@ -10,28 +10,33 @@ const LinksList =  ({ linksArray }) => {
     
     axios.get('/api/links')
     .then((resp)=>{
+      console.log('Entered Components links. Returning links:', resp.data.links);
+
       return setlinks(resp.data.links)
     });
 
   }, []);
-
+  console.log('Links from setLinks is:', links);
 
   return(  
-
-    links.map(({url, clicks, comments})=>{
-      <List>
-          <List.Item>
-            <List.Icon name='marker' />
-            <List.Content>
-              <List.Header as='a'>Why arent you showing up?</List.Header>
-              <List.Description>
-                {comments}
-              </List.Description>
-            </List.Content>
-          </List.Item>
-        </List>
+  <List>
+    {links.map(({id, url, clicks, comments})=>{
+      <List.Item key={id}>
+              <List.Icon name='marker' />
+              <List.Content>
+                <List.Header as='a'></List.Header>
+                <List.Description>
+                  AM I BEING RETURNED? 
+                  {comments}
+                </List.Description>
+              </List.Content>
+            </List.Item>
 
     })
+  }
+            
+        </List>
+
   
   );
   }
