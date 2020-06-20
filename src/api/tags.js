@@ -1,6 +1,6 @@
 const express = require("express");
 const tagsRouter = express.Router();
-const {} = require("../../db");
+const {} = require("../db");
 
 // GET /api/tags/:tagName/links
 tagsRouter.get("/:tagName/links", async (req, res, next) => {

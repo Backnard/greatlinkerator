@@ -1,6 +1,6 @@
 const express = require('express');
 const searchRouter = express.Router();
-const { getAllLinks } = require('../../db');
+const { getAllLinks } = require('../db');
 
 searchRouter.get('/', async (req, res, next)=>{
     //retrieve all saved links

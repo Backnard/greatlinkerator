@@ -1,6 +1,6 @@
 
 const express = require('express');
-const { getAllLinks, createLink,createLinkTags, updateLink } = require("../../db");
+const { getAllLinks, createLink,createLinkTags, updateLink } = require("../db");
 const linkRouter = express.Router();
 
 // GET /api/links
@@ -12,7 +12,8 @@ linkRouter.get("/", async (req, res, next) => {
     console.log('successfully retrieved all links: ', links);
   res.send({
     links,
-    status:true
+    status:true,
+    message: 'successfully retrieved all links'
   });
 });
 
