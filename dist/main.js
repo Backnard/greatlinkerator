@@ -84194,7 +84194,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const App = () => {
   const searchTerm = "t";
-  const [results, setResults] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  const [results, setResults] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]); //placeholder until searchBar is complete
+
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/api/SearchResults/${searchTerm}`).then(resp => {
       return setResults(resp.data.data);
