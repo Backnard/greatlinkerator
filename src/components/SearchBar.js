@@ -1,20 +1,20 @@
-import react, {useState, useEffect} from 'react'
+import React, {useState, useEffect} from 'react'
 import { List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
 
 const searchBar =()=>{
-    const[results, setResults] = useState([]);
-    axios.get("/api/SearchResults/google")
-    .then(resp=>{
-     console.log("Search Results from:", resp) 
-     return setResults(resp)
-    })
+    // const[results, setResults] = useState([]);
+    // axios.get("/api/SearchResults/google")
+    // .then(resp=>{
+    //  console.log("Search Results from:", resp) 
+    //  return setResults(resp)
+    // })
 
     return( 
     <div>
-    <p>HELLO, HERE ARE YOUR Results</p>
+    <p>Search Bar Here:</p>
     </div>)
     // return (
     //     <div id="search">

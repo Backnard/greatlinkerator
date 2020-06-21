@@ -1,31 +1,34 @@
-import react, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from "react";
 import { List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+const searchResults = ({
+  searchTerm,
+  results,
+  sortResultsByClick,
+  sortResultsByUrl,
+}) => {
+  return (
+    <div>
+      <p>Results for search term: "{searchTerm}"</p>
+      <button onClick={() => sortResultsByUrl(results)}>Sort by url</button>
+      <button onClick={() => sortResultsByClick(results)}>Sort by click</button>
+      <List>
+        {results.map(({ id, url, clicks, comments }) => {
+          return (
+            <List.Item key={id}>
+              <List.Icon name="marker" />
+              <List.Content>
+                <List.Header as="a">{url}</List.Header>
+                <List.Description>{comments}</List.Description>
+              </List.Content>
+            </List.Item>
+          );
+        })}
+      </List>
+    </div>
+  );
+};
 
-const searchResults =()=>{
-    const[results, setResults] = useState([]);
-
-    
-    return (
-        <div id="search">
-          <h3>Look up cards here...</h3>
-          <form onSubmit={ handleSubmit }>
-            <input
-              type="text" 
-              placeholder="card name"
-              value={ name }
-              onChange={ handleNameChange } />
-            <input
-              type="text"
-              placeholder="card text"
-              value={ text }
-              onChange={ handleTextChange } />
-            <button type="submit">Search</button>
-          </form>
-        </div>
-      );
-    }  
-
-
+export default searchResults;
