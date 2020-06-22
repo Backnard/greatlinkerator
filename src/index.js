@@ -2,22 +2,13 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import { SearchResult } from "semantic-ui-react";
-import { LinksList, SearchBar, SearchResults } from "./components";
+import { SearchResult } from "semantic-ui-react"; //This is redundant
+import { LinksList, SearchBar, SearchResults, LinksCard, SearchCreate } from "./components";
 
 const App = () => {
-  const searchTerm = "t";
-  const [results, setResults] = useState([]);
 
-  //placeholder until searchBar is complete
-  useEffect(() => {
-    axios.get(`/api/SearchResults/${searchTerm}`).then((resp) => {
-      return setResults(resp.data.data);
-    });
-  }, []);
-  console.log("result from setResults: ", results);
-  //   sortResultsByUrl(results);
-  //   console.log("sorted results from setResults: ", results);
+  const [results, setResults] = useState([]);
+  const [params, setParams] = useState('');
 
   const sortResultsByClick = (resultsToSort) => {
     resultsToSort.sort(function (a, b) {
@@ -47,18 +38,15 @@ const App = () => {
     <Router>
       <div>
         <nav>
-          <SearchBar />
+          < SearchCreate 
+              setResults = {setResults}
+              setParams = {setParams}/>
         </nav>
-        <h1>Hello Patrick!</h1>
-        <br />
-        <LinksList />
-        <br />
-        <SearchResults
-          searchTerm={searchTerm}
-          results={results}
-          sortResultsByClick={sortResultsByClick}
-          sortResultsByUrl={sortResultsByUrl}
-        />
+        <br/>
+        <LinksCard
+          setResults = {setResults} 
+          results = {results}
+          params = {params}/>
       </div>
     </Router>
   );

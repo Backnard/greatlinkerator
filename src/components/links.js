@@ -3,6 +3,7 @@ import { List } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
+//NOTE: LinksArray Props not used! Remove!
 const LinksList = ({ linksArray }) => {
   const [links, setLinks] = useState([]);
 

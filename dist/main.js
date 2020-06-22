@@ -84043,6 +84043,75 @@ const searchBar = ({
 
 /***/ }),
 
+/***/ "./src/components/SearchCreate.js":
+/*!****************************************!*\
+  !*** ./src/components/SearchCreate.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+const SearchCreate = ({
+  setResults,
+  setParams
+}) => {
+  const [url, setUrl] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])();
+
+  const hanleInputChange = event => {
+    event.preventDefault();
+    setUrl(event.target.value);
+    setParams(event.target.value);
+
+    if (url) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(`/api/SearchResults/${url}`).then(res => {
+        console.log("Entered components search. Found: ", res.data.data);
+        return setResults(res.data.data);
+      });
+    }
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Segment"], {
+    placeholder: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Grid"], {
+    columns: 2,
+    stackable: true,
+    textAlign: "center"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Divider"], {
+    vertical: true
+  }, "Or"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Grid"].Row, {
+    verticalAlign: "middle"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Grid"].Column, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"], {
+    icon: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
+    name: "search"
+  }), "Find Links"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Search"], {
+    placeholder: "Search links...",
+    onSearchChange: hanleInputChange
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Grid"].Column, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"], {
+    icon: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
+    name: "world"
+  }), "Add New Link"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+    primary: true
+  }, "Create")))));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SearchCreate);
+
+/***/ }),
+
 /***/ "./src/components/SearchResults.js":
 /*!*****************************************!*\
   !*** ./src/components/SearchResults.js ***!
@@ -84097,19 +84166,29 @@ const searchResults = ({
 /*!*********************************!*\
   !*** ./src/components/index.js ***!
   \*********************************/
-/*! exports provided: SearchBar, SearchResults, LinksList */
+/*! exports provided: SearchBar, SearchResults, LinksList, LinksCard, SearchCreate */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SearchBar */ "./src/components/SearchBar.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SearchBar", function() { return _SearchBar__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+/* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBar */ "./src/components/SearchBar.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SearchBar", function() { return _SearchBar__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _SearchResults__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchResults */ "./src/components/SearchResults.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SearchResults", function() { return _SearchResults__WEBPACK_IMPORTED_MODULE_1__["default"]; });
+/* harmony import */ var _SearchResults__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SearchResults */ "./src/components/SearchResults.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SearchResults", function() { return _SearchResults__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _links__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./links */ "./src/components/links.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinksList", function() { return _links__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _links__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./links */ "./src/components/links.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinksList", function() { return _links__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+
+/* harmony import */ var _linksCards__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./linksCards */ "./src/components/linksCards.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinksCard", function() { return _linksCards__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+
+/* harmony import */ var _SearchCreate__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./SearchCreate */ "./src/components/SearchCreate.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SearchCreate", function() { return _SearchCreate__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+
+
+
 
 
 
@@ -84135,7 +84214,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+ //NOTE: LinksArray Props not used! Remove!
 
 const LinksList = ({
   linksArray
@@ -84168,6 +84247,81 @@ const LinksList = ({
 
 /***/ }),
 
+/***/ "./src/components/linksCards.js":
+/*!**************************************!*\
+  !*** ./src/components/linksCards.js ***!
+  \**************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+const LinksCard = ({
+  results,
+  setResults,
+  params
+}) => {
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/links").then(resp => {
+      console.log("Entered Components links. Returning links:", resp.data.links); // return setLinks(resp.data.links);
+
+      return setResults(resp.data.links);
+    });
+  }, []);
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    if (!params.length) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('api/links').then(resp => {
+        setResults(resp.data.links);
+      });
+    }
+  }, [params]); // console.log("Links from setLinks is:", links);
+
+  console.log('Links from setResults is: ', results);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Card"].Group, null, results.map(({
+    id,
+    url,
+    clicks,
+    comments
+  }) => {
+    const urlString = `http://${url}`;
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Card"], {
+      key: id
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Card"].Content, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Image"], {
+      floated: "right",
+      size: "mini",
+      src: "https://vignette.wikia.nocookie.net/nintendo/images/f/f2/The_Legend_of_Zelda_-_Link%E2%80%99s_Awakening_-_Link.png/revision/latest?cb=20190806182731&path-prefix=en"
+    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Card"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      href: urlString,
+      target: "_blank"
+    }, url)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Card"].Meta, null, clicks), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Card"].Description, null, comments)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Card"].Content, {
+      extra: true
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      className: "ui two buttons"
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      basic: true,
+      color: "green"
+    }, "Share"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+      basic: true,
+      color: "red"
+    }, "Delete"))));
+  }));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (LinksCard);
+
+/***/ }),
+
 /***/ "./src/index.js":
 /*!**********************!*\
   !*** ./src/index.js ***!
@@ -84190,20 +84344,13 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ //This is redundant
 
 
 
 const App = () => {
-  const searchTerm = "t";
-  const [results, setResults] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]); //placeholder until searchBar is complete
-
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/api/SearchResults/${searchTerm}`).then(resp => {
-      return setResults(resp.data.data);
-    });
-  }, []);
-  console.log("result from setResults: ", results); //   sortResultsByUrl(results);
-  //   console.log("sorted results from setResults: ", results);
+  const [results, setResults] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
+  const [params, setParams] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
 
   const sortResultsByClick = resultsToSort => {
     resultsToSort.sort(function (a, b) {
@@ -84230,11 +84377,13 @@ const App = () => {
     return setResults(results);
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["SearchBar"], null)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h1", null, "Hello Patrick!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["LinksList"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["SearchResults"], {
-    searchTerm: searchTerm,
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["SearchCreate"], {
+    setResults: setResults,
+    setParams: setParams
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["LinksCard"], {
+    setResults: setResults,
     results: results,
-    sortResultsByClick: sortResultsByClick,
-    sortResultsByUrl: sortResultsByUrl
+    params: params
   })));
 };
 
