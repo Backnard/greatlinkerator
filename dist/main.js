@@ -84011,31 +84011,32 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const searchBar = () => {
-  // const[results, setResults] = useState([]);
-  // axios.get("/api/SearchResults/google")
-  // .then(resp=>{
-  //  console.log("Search Results from:", resp) 
-  //  return setResults(resp)
-  // })
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Search Bar Here:")); // return (
-  //     <div id="search">
-  //       <h3>Look up cards here...</h3>
-  //       <form onSubmit={ handleSubmit }>
-  //         <input
-  //           type="text" 
-  //           placeholder="card name"
-  //           value={ name }
-  //           onChange={ handleNameChange } />
-  //         <input
-  //           type="text"
-  //           placeholder="card text"
-  //           value={ text }
-  //           onChange={ handleTextChange } />
-  //         <button type="submit">Search</button>
-  //       </form>
-  //     </div>
-  //   );
+const searchBar = ({
+  setResults
+}) => {
+  const [linksstored] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
+
+  const handleLinkChange = event => {
+    setName(event.target.value);
+  };
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setResults(linksstored);
+  }
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    id: "search"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Search..."), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    type: "text",
+    placeholder: "links",
+    value: linksstored,
+    onInput: handleLinkChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    type: "submit"
+  }, "Search")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (searchBar);

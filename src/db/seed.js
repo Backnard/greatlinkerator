@@ -79,6 +79,8 @@ async function testDB() {
     console.log('created Tags:', tags);
     
     await addTagsToLink(1,tags);
+    await addTagsToLink(2,tags);
+    await addTagsToLink(3,tags);
 
     await deleteLink(1);
 }
