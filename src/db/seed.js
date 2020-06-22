@@ -67,7 +67,7 @@ async function testDB() {
     const linksArray=[
         {url:'www.facebook.com', comment:'this is no longer cool'}, 
         {url:'www.twitter.com', comment: 'a modern-day soapbox'},
-        {url:'wwww.hulu.com', comment: 'why do they charge me AND show commercials?'},{url:'www.fullstack.com',comment: 'now I can work remotely from a tropical island'}
+        {url:'www.hulu.com', comment: 'why do they charge me AND show commercials?'},{url:'www.fullstack.com',comment: 'now I can work remotely from a tropical island'}
     ];
 
     linksArray.forEach(link=>createLink(link));
