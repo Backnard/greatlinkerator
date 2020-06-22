@@ -84073,6 +84073,7 @@ const SearchCreate = ({
     event.preventDefault();
     setUrl(event.target.value);
     setParams(event.target.value);
+    console.log('Search Params: ', url);
 
     if (url) {
       axios__WEBPACK_IMPORTED_MODULE_3___default.a.get(`/api/SearchResults/${url}`).then(res => {

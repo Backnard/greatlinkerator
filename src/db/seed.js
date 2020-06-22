@@ -67,7 +67,11 @@ async function testDB() {
     const linksArray=[
         {url:'www.facebook.com', comment:'this is no longer cool'}, 
         {url:'www.twitter.com', comment: 'a modern-day soapbox'},
-        {url:'www.hulu.com', comment: 'why do they charge me AND show commercials?'},{url:'www.fullstack.com',comment: 'now I can work remotely from a tropical island'}
+        {url:'www.hulu.com', comment: 'why do they charge me AND show commercials?'},{url:'www.fullstack.com',comment: 'now I can work remotely from a tropical island'},
+        {url:'www.reddit.com', comment: 'it can be disturbing sometimes'},
+        {url:'www.pinterest.com', comment:'isnt this essentially what we are trying to build?'},
+        {url:'www.react.semantic-ui.com', comment: 'this is our framework library for the project'},
+        {url:'www.github.com', comment: 'This place is awesome!'}
     ];
 
     linksArray.forEach(link=>createLink(link));
@@ -77,10 +81,8 @@ async function testDB() {
     const tags = await createTags(['I need a job', 'Pay me lots of money', 'Will do SQL for Money']);
 
     console.log('created Tags:', tags);
-    
-    await addTagsToLink(1,tags);
-    await addTagsToLink(2,tags);
-    await addTagsToLink(3,tags);
+
+    linksArray.forEach((link, index)=>addTagsToLink(index+1,tags));
 
     await deleteLink(1);
 }

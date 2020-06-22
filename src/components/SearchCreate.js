@@ -17,6 +17,7 @@ const SearchCreate = ({ setResults, setParams }) => {
     event.preventDefault();
     setUrl( event.target.value );
     setParams(event.target.value);
+    console.log('Search Params: ', url);
     
     if(url){
       axios.get(`/api/SearchResults/${url}`)
