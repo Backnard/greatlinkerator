@@ -8,14 +8,15 @@ const db = new Client(connectionString);
 async function createLink({url, comment, date=null }) {
 
     try {
-        console.log('Entered db createLink')
+        console.log('Entered db createLink: ', url, 'comment:',comment, 'date:',date);
+        
         const {rows: [newLink]} = await db.query(`
-    INSERT INTO links("url", "comments") VALUES ($1, $2)
+    INSERT INTO links("url", "comments", "share_date") VALUES ($1, $2, $3)
     RETURNING *;
-    `, [url, comment]);
+    `, [url, comment, date]);
 
-    console.log('created new link: ', newLink);
-
+    console.log('From db: created new link: ', newLink);
+        return newLink;
     } catch (error) {
         throw error;
     }
@@ -192,6 +193,26 @@ try{
 }
 };
 
+async function getLinkByTag(tag) {
+
+    console.log('Entered db getLinkByTag')
+    try {
+        const { rows:[link] } = await db.query(`
+        SELECT * FROM links
+        JOIN links_tags
+        ON links.id = links_tags.links_id
+        JOIN tags ON links_tags.tags_id = tags.id
+        WHERE tags.name LIKE '%${tag}%';
+        `);
+
+        console.log('Successfully retrieved link: ', link);
+        return link; 
+
+    } catch (error) {
+        throw error;
+    }
+}
+
 module.exports= { 
     db, 
     createLink, 
@@ -201,5 +222,6 @@ module.exports= {
     addTagsToLink,
     getAllLinks,
     deleteLink,
-    getLinkByUrl
+    getLinkByUrl,
+    getLinkByTag
  }; 

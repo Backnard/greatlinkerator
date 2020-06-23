@@ -3,12 +3,13 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { SearchResult } from "semantic-ui-react"; //This is redundant
-import { LinksList, SearchBar, SearchResults, LinksCard, SearchCreate } from "./components";
+import { LinksList, SearchBar, SearchResults, LinksCard, SearchCreate, CreateElementModal } from "./components";
 
 const App = () => {
 
   const [results, setResults] = useState([]);
   const [params, setParams] = useState('');
+  const [showModal, setShowModal] = useState(false);
 
   const sortResultsByClick = (resultsToSort) => {
     resultsToSort.sort(function (a, b) {
@@ -38,9 +39,11 @@ const App = () => {
     <Router>
       <div>
         <nav>
+          <CreateElementModal
+            showModal={showModal}/>
           < SearchCreate 
               setResults = {setResults}
-              setParams = {setParams}/>
+              setShowModal={ setShowModal }/>
         </nav>
         <br/>
         <LinksCard

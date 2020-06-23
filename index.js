@@ -1,6 +1,7 @@
 const express = require('express');
 const { db } = require('./src/db');
 const path = require('path');
+const BodyParser = require('body-parser');
 db.connect();
 
 const dotenv = require('dotenv').config();
@@ -8,13 +9,12 @@ const dotenv = require('dotenv').config();
 const { PORT = 3001} = process.config;//process.env.PORT??
 
 const server = express();
+server.use(BodyParser.json());
 
 const apiRouter = require('./src/api');
 //Static file server here
 
 server.use(express.static(path.join(__dirname, './dist')));
-
-server.use(express.json());
 
 server.use('/api', apiRouter);
 

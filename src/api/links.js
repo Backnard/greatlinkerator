@@ -1,7 +1,13 @@
 
 const express = require('express');
-const { getAllLinks, createLink,createLinkTags, updateLink } = require("../db");
+const { getAllLinks, 
+        createLink,
+        createLinkTags, 
+        updateLink,
+        getLinkByTag } = require("../db");
 const linkRouter = express.Router();
+const bodyparser = require('body-parser');
+linkRouter.use(bodyparser.json());
 
 // GET /api/links
 ///Router for GET LINKS(by P.V.)
@@ -20,7 +26,7 @@ linkRouter.get("/", async (req, res, next) => {
 // POST /api/links (creates tags during link creation)
 linkRouter.post("/", async (req, res, next) => {
     const {url, comment, date} = req.body;
-    console.log('Entered /links PATCH. req.body: ', req.body);
+    console.log('Entered /links POST. req.body: ', req.body);
 
     try {
         //creates tags during link creation???
@@ -69,6 +75,22 @@ linkRouter.patch('/:id', async (req, res, next) => {
     } catch (error) {
         next(error);
     }
+})
+
+linkRouter.get('/:tag', async (req, res, next)=>{
+    const { tag } = req.params;
+
+    try {
+        const links = await getLinkByTag(tag);
+        res.send({
+            message: 'Successfully retrieved links',
+            data: links,
+            status: true
+        })
+    } catch (error) {
+        next(error);
+    }
+
 })
 
 module.exports = linkRouter;

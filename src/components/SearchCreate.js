@@ -8,9 +8,10 @@ import { Button,
   Segment, } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import faker from 'faker';
 
 
-const SearchCreate = ({ setResults, setParams }) => {
+const SearchCreate = ({ setResults, setShowModal }) => {
   const [url, setUrl] = useState();
 
   const hanleInputChange = event => {
@@ -25,7 +26,21 @@ const SearchCreate = ({ setResults, setParams }) => {
         console.log("Entered components search. Found: ", res.data.data)
         return setResults(res.data.data);
       })
+
     }
+  }
+
+  const handleSubmit= event =>{
+     event.preventDefault();
+    
+    //  setShowModal(true);
+    //  will be updated after test!
+     const data = {
+       url: 'legendOfZelda.com',
+       comment: 'why wont this work?',
+       date: '03/22/2022'
+     }
+     axios.post('/api/links', data);
   }
 
   return (
@@ -50,7 +65,11 @@ const SearchCreate = ({ setResults, setParams }) => {
           <Icon name='world' />
           Add New Link
         </Header>
-        <Button primary>Create</Button>
+        <Button 
+          primary
+          onClick={ handleSubmit }>
+            Create
+        </Button>
       </Grid.Column>
     </Grid.Row>
   </Grid>

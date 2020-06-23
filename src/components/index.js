@@ -5,3 +5,4 @@ export { default as SearchResults } from './SearchResults';
 export { default as LinksList } from './links';
 export {default as LinksCard } from './linksCards';
 export {default as SearchCreate } from './SearchCreate';
+export { default as CreateElementModal } from './modal';
