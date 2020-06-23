@@ -10,6 +10,7 @@ const App = () => {
   const [results, setResults] = useState([]);
   const [params, setParams] = useState('');
   const [showModal, setShowModal] = useState(false);
+  
 
   const sortResultsByClick = (resultsToSort) => {
     resultsToSort.sort(function (a, b) {
@@ -39,17 +40,23 @@ const App = () => {
     <Router>
       <div>
         <nav>
-          <CreateElementModal
-            showModal={showModal}/>
-          < SearchCreate 
+          {/* < SearchCreate 
               setResults = {setResults}
-              setShowModal={ setShowModal }/>
+              setShowModal={ setShowModal }/> */}
+          <SearchBar
+            setResults={setResults}
+            setParams= { setParams }
+            />
         </nav>
         <br/>
-        <LinksCard
-          setResults = {setResults} 
-          results = {results}
-          params = {params}/>
+          <SearchResults
+            results={results}
+            setResults={setResults}
+            sortResultsByClick= {sortResultsByClick}
+            sortResultsByUrl={sortResultsByUrl}
+            params = { params }>
+
+          </SearchResults>
       </div>
     </Router>
   );

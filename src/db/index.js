@@ -9,7 +9,7 @@ async function createLink({url, comment, date=null }) {
 
     try {
         console.log('Entered db createLink: ', url, 'comment:',comment, 'date:',date);
-        
+
         const {rows: [newLink]} = await db.query(`
     INSERT INTO links("url", "comments", "share_date") VALUES ($1, $2, $3)
     RETURNING *;
@@ -213,6 +213,15 @@ async function getLinkByTag(tag) {
     }
 }
 
+async function searchAllLinks(searchTerm) {
+    let searchResults =[];
+    const promiseArray = [getLinkByTag(searchTerm), getLinkByUrl(searchTerm)];
+    const results = await Promise.all(promiseArray);
+
+    
+    console.log(results);
+}
+
 module.exports= { 
     db, 
     createLink, 
@@ -223,5 +232,6 @@ module.exports= {
     getAllLinks,
     deleteLink,
     getLinkByUrl,
-    getLinkByTag
+    getLinkByTag, 
+    searchAllLinks
  }; 

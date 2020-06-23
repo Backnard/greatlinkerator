@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 //NOTE: LinksArray Props not used! Remove!
-const LinksList = ({ linksArray }) => {
+const LinksList = ({ linksArray, results }) => {
   const [links, setLinks] = useState([]);
 
   useEffect(() => {
@@ -14,9 +14,27 @@ const LinksList = ({ linksArray }) => {
         resp.data.links
       );
 
-      return setLinks(resp.data.links);
+      // return setLinks(resp.data.links);
+
     });
   }, []);
+
+
+  useEffect(() => {
+    if(!results||results.length<1){
+      console.log('Im in the links useEffect No Results', results.length);
+    axios.get("/api/links").then((resp) => {
+      console.log(
+        "Entered Components links. Returning links:",
+        resp.data.links
+      );
+
+      return setLinks(resp.data.links);
+    });
+  }
+  }, [results]);
+
+
   console.log("Links from setLinks is:", links);
 
   return (

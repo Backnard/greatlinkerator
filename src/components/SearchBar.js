@@ -4,11 +4,29 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 
-const searchBar = ({ setResults }) => {
+const searchBar = ({ setResults, setParams }) => {
   const [linksstored] = useState('');
+  const [url, setUrl] = useState('');
+
 
   const handleLinkChange = event => {
-    setName( event.target.value );
+    event.preventDefault();
+    setUrl( event.target.value );
+    setParams(event.target.value);
+
+    let resultsArray=[];
+
+    axios.get(`/api/SearchResults/${url}`)
+      .then(res=>{
+        console.log('Search Bar Search Results: ', res.data.data);
+
+        const results = res.data.data;
+        if(results){
+          return setResults(results);
+  
+        }
+       
+      })
   }
 
 
@@ -21,13 +39,13 @@ const searchBar = ({ setResults }) => {
  return (
     <div id="search">
       <h3>Search...</h3>
-      <form onSubmit={ handleSubmit }>
+      <form >
         <input
           type="text" 
           placeholder="links"
-          value={ linksstored }
+          // value={ linksstored }
           onInput={ handleLinkChange } />
-        <button type="submit">Search</button>
+        {/* <button type="submit">Search</button> */}
       </form>
     </div>
   );

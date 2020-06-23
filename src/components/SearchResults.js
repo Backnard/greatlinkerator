@@ -4,14 +4,34 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const searchResults = ({
-  searchTerm,
   results,
   sortResultsByClick,
   sortResultsByUrl,
+  setResults, 
+  params
 }) => {
+
+useEffect(()=>{
+  axios.get('/api/links')
+    .then(res=>{
+      console.log('Initial results: ', res.data.data);
+      return setResults(res.data.links);
+    })
+}, []);
+
+// useEffect(()=>{
+//   console.log('Entered SearchResults NoRESULTS: ',params.length);
+//   if(!params|| params.length<1){
+//     console.log('I guess results is undefined?');
+//     axios.get('/api/links')
+//     .then(res=>{
+//       return setResults(res.data.links);
+//     })
+//   }
+// }, [results]);
+
   return (
     <div>
-      <p>Results for search term: "{searchTerm}"</p>
       <button onClick={() => sortResultsByUrl(results)}>Sort by url</button>
       <button onClick={() => sortResultsByClick(results)}>Sort by click</button>
       <List>

@@ -18,13 +18,13 @@ const LinksCard = ({ results, setResults, params }) => {
   }, []);
 
 
-  useEffect(()=>{
-    if(!params.length){
-      axios.get('api/links')
-        .then((resp)=>{
-          setResults(resp.data.links)});
-    }
-  }, [params])
+  // useEffect(()=>{
+  //   if(!params.length){
+  //     axios.get('api/links')
+  //       .then((resp)=>{
+  //         setResults(resp.data.links)});
+  //   }
+  // }, [params])
 
   // console.log("Links from setLinks is:", links);
   console.log('Links from setResults is: ', results);
