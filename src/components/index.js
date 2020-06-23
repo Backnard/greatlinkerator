@@ -6,3 +6,4 @@ export { default as LinksList } from './links';
 export {default as LinksCard } from './linksCards';
 export {default as SearchCreate } from './SearchCreate';
 export { default as CreateElementModal } from './modal';
+export { default as LinkList } from './LinkList';

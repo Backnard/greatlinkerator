@@ -27,7 +27,7 @@ async function createDB() {
         links(
             id SERIAL PRIMARY KEY,
             url VARCHAR(255) UNIQUE,
-            clicks INTEGER,
+            clicks INTEGER DEFAULT 0,
             comments TEXT, 
             share_date DATE DEFAULT CURRENT_TIMESTAMP
         );

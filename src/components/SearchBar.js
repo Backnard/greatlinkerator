@@ -8,6 +8,19 @@ const searchBar = ({ setResults, setParams }) => {
   const [linksstored] = useState('');
   const [url, setUrl] = useState('');
 
+//   function searchMatches(post, text) {
+//     const { title, author, price, location, description } = post;
+//     const filterOn = [title, author.username, price, location, description];
+  
+//     return filterOn.some((string) => {
+//       return string.toLowerCase().includes(text);
+//     });
+//   }
+
+//   let filteredPosts = state.posts.filter((post) =>
+//   searchMatches(post, state.searchTerm)
+// );
+
 
   const handleLinkChange = event => {
     event.preventDefault();
@@ -27,13 +40,6 @@ const searchBar = ({ setResults, setParams }) => {
         }
        
       })
-  }
-
-
-  async function handleSubmit(event) {
-    event.preventDefault();
-  
-    setResults(linksstored);
   }
 
  return (
