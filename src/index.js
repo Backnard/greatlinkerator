@@ -8,8 +8,6 @@ import { LinkList, SearchBar, SearchResults, Links, SearchCreate, CreateElementM
 const App = () => {
 
   const [results, setResults] = useState([]);
-  const [params, setParams] = useState('');
-  const [showModal, setShowModal] = useState(false);
 
   return (
     <Router>
@@ -19,8 +17,8 @@ const App = () => {
               setResults = {setResults}
               setShowModal={ setShowModal }/> */}
           <SearchBar
+            results={results}
             setResults={setResults}
-            setParams= { setParams }
             />
           <LinkList
             results={results}

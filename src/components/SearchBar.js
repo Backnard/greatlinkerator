@@ -4,42 +4,30 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 
-const searchBar = ({ setResults, setParams }) => {
-  const [linksstored] = useState('');
-  const [url, setUrl] = useState('');
+const searchBar = ({ results, setResults }) => {
+  const [searchTerm, setSearchTerm] = useState('');
 
-//   function searchMatches(post, text) {
-//     const { title, author, price, location, description } = post;
-//     const filterOn = [title, author.username, price, location, description];
+  function searchMatches(result, compare) {
+    console.log('searchMatches, results: ', results, 'compare: ', compare);
+    const { id, url, comments } = result;
+    const newId = id.toString();
+    const filterOn = [newId, url, comments];
   
-//     return filterOn.some((string) => {
-//       return string.toLowerCase().includes(text);
-//     });
-//   }
-
-//   let filteredPosts = state.posts.filter((post) =>
-//   searchMatches(post, state.searchTerm)
-// );
-
+    return filterOn.some((string) => {
+      return string.toLowerCase().includes(compare);
+    });
+  }
 
   const handleLinkChange = event => {
     event.preventDefault();
-    setUrl( event.target.value );
-    setParams(event.target.value);
+    setSearchTerm( event.target.value)
 
-    let resultsArray=[];
-
-    axios.get(`/api/SearchResults/${url}`)
-      .then(res=>{
-        console.log('Search Bar Search Results: ', res.data.data);
-
-        const results = res.data.data;
-        if(results){
-          return setResults(results);
-  
-        }
-       
-      })
+    console.log('SearchBar results: ', results);
+      let filteredResults = results.filter((result) =>
+      searchMatches(result, searchTerm)
+    );
+    console.log("your filtered search results: ", filteredResults);
+    setResults(filteredResults);
   }
 
  return (
@@ -50,7 +38,7 @@ const searchBar = ({ setResults, setParams }) => {
           type="text" 
           placeholder="links"
           // value={ linksstored }
-          onInput={ handleLinkChange } />
+          onChange={ handleLinkChange } />
         {/* <button type="submit">Search</button> */}
       </form>
     </div>
