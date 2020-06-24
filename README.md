@@ -7,6 +7,7 @@ Sean
 
 Patrick
 1. Create component with addNewLink, ShareLink, SortLinks (work with Brian)
+    - Put in main html
 
 Brian
 1. Search Results: Populate empty Array with LINKS GET ALL LINKS. Search results is array.filter(). 

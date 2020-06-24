@@ -40,9 +40,6 @@ const App = () => {
     <Router>
       <div>
         <nav>
-          {/* < SearchCreate 
-              setResults = {setResults}
-              setShowModal={ setShowModal }/> */}
           <SearchBar
             setResults={setResults}
             setParams= { setParams }
