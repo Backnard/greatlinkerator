@@ -4,44 +4,44 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 //NOTE: LinksArray Props not used! Remove!
-const LinksList = ({ linksArray, results }) => {
-  const [links, setLinks] = useState([]);
+const Links = ({ linksArray, results }) => {
+  // const [links, setLinks] = useState([]);
 
-  useEffect(() => {
-    axios.get("/api/links").then((resp) => {
-      console.log(
-        "Entered Components links. Returning links:",
-        resp.data.links
-      );
+  // useEffect(() => {
+  //   axios.get("/api/links").then((resp) => {
+  //     console.log(
+  //       "Entered Components links. Returning links:",
+  //       resp.data.links
+  //     );
 
-      // return setLinks(resp.data.links);
+  //     // return setLinks(resp.data.links);
 
-    });
-  }, []);
-
-
-  useEffect(() => {
-    if(!results||results.length<1){
-      console.log('Im in the links useEffect No Results', results.length);
-    axios.get("/api/links").then((resp) => {
-      console.log(
-        "Entered Components links. Returning links:",
-        resp.data.links
-      );
-
-      return setLinks(resp.data.links);
-    });
-  }
-  }, [results]);
+  //   });
+  // }, []);
 
 
-  console.log("Links from setLinks is:", links);
+  // useEffect(() => {
+  //   if(!results||results.length<1){
+  //     console.log('Im in the links useEffect No Results', results.length);
+  //   axios.get("/api/links").then((resp) => {
+  //     console.log(
+  //       "Entered Components links. Returning links:",
+  //       resp.data.links
+  //     );
+
+  //     return setLinks(resp.data.links);
+  //   });
+  // }
+  // }, [results]);
+
+
+  // console.log("Links from setLinks is:", links);
 
   return (
     <div>
       <p>Here are your links:</p>
     <List>
-      {links.map(({ id, url, clicks, comments }) => {
+      {results.map(({ id, url, clicks, comments }) => {
         return (
           <List.Item key={id}>
             <List.Icon name="marker" />
@@ -57,4 +57,4 @@ const LinksList = ({ linksArray, results }) => {
   );
 };
 
-export default LinksList;
+export default Links;

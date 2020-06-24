@@ -51,7 +51,8 @@ const linkList = ({
   function handleAlphabeticalClick(event) {
     event.preventDefault();
     let data = sortAlphabetically(results);
-    setResults(data);
+    console.log('data: ', data);
+    setResults([{id: 1, url: 'Sean', comments: 'hi'}]);
   }
 
   function handleNumericalClick(event) {
@@ -60,25 +61,25 @@ const linkList = ({
     setResults(data);
   }
 
-  function createList(resultsToMap) {
-    return resultsToMap.map(({url, clicks, comments }) => {
-      return (
-        <List.Item key={url}>
-          <List.Icon name="marker" />
-          <List.Content>
-            <List.Header as="a">{url}</List.Header>
-            <List.Description>{comments}</List.Description>
-          </List.Content>
-        </List.Item>
-      );
-    })
-  }
+  // function createList() {
+  //   return results.map(({url, clicks, comments }) => {
+  //     return (
+  //       <List.Item key={url}>
+  //         <List.Icon name="marker" />
+  //         <List.Content>
+  //           <List.Header as="a">{url}</List.Header>
+  //           <List.Description>{comments}</List.Description>
+  //         </List.Content>
+  //       </List.Item>
+  //     );
+  //   })
+  // }
 
   return (
     <div>
       <button onClick={handleAlphabeticalClick}>Sort by url</button>
       <button onClick={handleNumericalClick}>Sort by click</button>
-      <List>{createList(results)}</List>
+      {/* <List>{createList()}</List> */}
     </div>
   );
 };
