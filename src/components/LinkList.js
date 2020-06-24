@@ -52,7 +52,6 @@ const linkList = ({
     event.preventDefault();
     let data = sortAlphabetically(results);
     setResults(data);
-
   }
 
   function handleNumericalClick(event) {
