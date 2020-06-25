@@ -5,19 +5,19 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 //NOTE: LinksArray Props not used! Remove!
-const LinksTable = ({ linksArray, results }) => {
+const LinksTable = ({ results }) => {
 
   const handleClick = (event) => {
     // event.preventDefault();
     console.log('testing click handler');
     const id = event.target.id;
-    console.log("here's your key, maybe? ", id);
-
+    if (id) {
+      console.log("here's your ID: ", id);
+    }
   }
 
 
   return (
-    
     <Table celled padded>
     <Table.Header>
       <Table.Row>
@@ -34,7 +34,7 @@ const LinksTable = ({ linksArray, results }) => {
         return (
             <Table.Row key={id}>
             <Table.Cell>
-              <Header as='a' href={urlString} target= '_blank' textAlign='center'>
+              <Header as='a' href={urlString} target= '_blank' textAlign='center' id={id}>
                 {url}
               </Header>
             </Table.Cell>
