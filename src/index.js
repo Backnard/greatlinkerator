@@ -3,27 +3,26 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { SearchResult } from "semantic-ui-react"; //This is redundant
-import { LinkList, SearchBar, SearchResults, LinksCard, SearchCreate, CreateElementModal } from "./components";
+import { LinkList, SearchBar, SearchResults, Links, SearchCreate, CreateElementModal } from "./components";
 
 const App = () => {
 
   const [results, setResults] = useState([]);
-  const [params, setParams] = useState('');
-  const [showModal, setShowModal] = useState(false);
 
   return (
     <Router>
       <div>
         <nav>
           <SearchBar
+            results={results}
             setResults={setResults}
-            setParams= { setParams }
             />
-        </nav>
-        <br/>
           <LinkList
             results={results}
             setResults={setResults}/>
+        </nav>
+        <br/>
+        <Links results={results}/>
       </div>
     </Router>
   );

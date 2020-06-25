@@ -4,49 +4,29 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 //NOTE: LinksArray Props not used! Remove!
-const LinksList = ({ linksArray, results }) => {
-  const [links, setLinks] = useState([]);
+const Links = ({ linksArray, results }) => {
 
-  useEffect(() => {
-    axios.get("/api/links").then((resp) => {
-      console.log(
-        "Entered Components links. Returning links:",
-        resp.data.links
-      );
+  const handleClick = (event) => {
+    event.preventDefault();
+    console.log('testing click handler');
+    const key = event.target.id
+    console.log("here's your key, maybe? ", key);
 
-      return setLinks(resp.data.links);
-
-    });
-  }, []);
-
-
-  // useEffect(() => {
-  //   if(!results||results.length<1){
-  //     console.log('Im in the links useEffect No Results', results.length);
-  //   axios.get("/api/links").then((resp) => {
-  //     console.log(
-  //       "Entered Components links. Returning links:",
-  //       resp.data.links
-  //     );
-
-  //     return setLinks(resp.data.links);
-  //   });
-  // }
-  // }, [results]);
-
-
-  console.log("Links from setLinks is:", links);
+  }
 
   return (
     <div>
       <p>Here are your links:</p>
-    <List>
-      {links.map(({ id, url, clicks, comments }) => {
+    <List onClick={handleClick}>
+      {results.map(({ id, url, clicks, comments }) => {
+          const urlString = `http://${url}`;
         return (
           <List.Item key={id}>
             <List.Icon name="marker" />
             <List.Content>
-              <List.Header as="a">{url}</List.Header>
+              <List.Header><a href = {urlString} target='_blank'>
+              {url}
+              </a></List.Header>
               <List.Description>{comments}</List.Description>
             </List.Content>
           </List.Item>
@@ -57,4 +37,4 @@ const LinksList = ({ linksArray, results }) => {
   );
 };
 
-export default LinksList;
+export default Links;

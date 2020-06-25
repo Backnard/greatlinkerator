@@ -20,19 +20,11 @@ const linkList = ({
     });
   }, []);
 
-  function sortNumerically(data) {
-    let resultsToSort = data;
-    resultsToSort.sort(function (a, b) {
-      return a.id - b.id;
-    });
+  function sortByUrl(event) {
+    event.preventDefault();
+    let newArray = [...results];
 
-    console.log('results sorted numerically: ', resultsToSort);
-    return resultsToSort;
-  };
-
-  function sortAlphabetically(data) {
-    let resultsToSort = data;
-    resultsToSort.sort(function (a, b) {
+    newArray.sort(function (a, b) {
       const x = a.url.toLowerCase();
       const y = b.url.toLowerCase();
       if (x < y) {
@@ -44,42 +36,60 @@ const linkList = ({
       return 0;
     });
 
-    console.log('results sorted alphabetically: ', resultsToSort);
-    return resultsToSort;
+    console.log('results sorted by url: ', newArray);
+    setResults(newArray);
   };
 
-  function handleAlphabeticalClick(event) {
+  function sortById(event) {
     event.preventDefault();
-    let data = sortAlphabetically(results);
-    setResults(data);
+    let newArray = [...results];
 
-  }
+    newArray.sort(function (a, b) {
+      return a.id - b.id;
+    });
 
-  function handleNumericalClick(event) {
+    console.log('results sorted by ID: ', newArray);
+    setResults(newArray);
+  };
+
+  function sortByComments(event) {
     event.preventDefault();
-    let data = sortNumerically(results);
-    setResults(data);
-  }
+    let newArray = [...results];
 
-  function createList(resultsToMap) {
-    return resultsToMap.map(({url, clicks, comments }) => {
-      return (
-        <List.Item key={url}>
-          <List.Icon name="marker" />
-          <List.Content>
-            <List.Header as="a">{url}</List.Header>
-            <List.Description>{comments}</List.Description>
-          </List.Content>
-        </List.Item>
-      );
-    })
-  }
+    newArray.sort(function (a, b) {
+      const x = a.comments.toLowerCase();
+      const y = b.comments.toLowerCase();
+      if (x < y) {
+        return -1;
+      }
+      if (x > y) {
+        return 1;
+      }
+      return 0;
+    });
+
+    console.log('results sorted by comments: ', newArray);
+    setResults(newArray);
+  };
+
+  function sortByClicks(event) {
+    event.preventDefault();
+    let newArray = [...results];
+
+    newArray.sort(function (a, b) {
+      return a.clicks - b.clicks;
+    });
+
+    console.log('results sorted by clicks: ', newArray);
+    setResults(newArray);
+  };
 
   return (
     <div>
-      <button onClick={handleAlphabeticalClick}>Sort by url</button>
-      <button onClick={handleNumericalClick}>Sort by click</button>
-      <List>{createList(results)}</List>
+      <button onClick={sortByUrl}>Sort by url</button>
+      <button onClick={sortById}>Sort by ID</button>
+      <button onClick={sortByComments}>Sort by Comments</button>
+      <button onClick={sortByClicks}>Sort by Clicks</button>
     </div>
   );
 };
