@@ -19,16 +19,6 @@ useEffect(()=>{
     })
 }, []);
 
-// useEffect(()=>{
-//   console.log('Entered SearchResults NoRESULTS: ',params.length);
-//   if(!params|| params.length<1){
-//     console.log('I guess results is undefined?');
-//     axios.get('/api/links')
-//     .then(res=>{
-//       return setResults(res.data.links);
-//     })
-//   }
-// }, [results]);
 
   return (
     <div>

@@ -115,6 +115,21 @@ async function addTagsToLink(linkId, tags) {
     
 }
 
+async function updateClickCount(linkId) {
+    console.log('Entered db updateClickCount');
+    try {
+        const { rows: link} = await db.query(`
+        UPDATE links
+        SET clicks = clicks + 1
+        WHERE id = $1;
+        `, [linkId]);
+
+        console.log('successfully updated click count for link: ', link)
+    } catch (error) {
+        
+    }
+}
+
 async function getLinkById(linkId) {
 
     console.log('Entered db getLinkById with linkId:', linkId);
@@ -233,5 +248,7 @@ module.exports= {
     deleteLink,
     getLinkByUrl,
     getLinkByTag, 
-    searchAllLinks
+    searchAllLinks, 
+    getLinkById,
+    updateClickCount
  }; 

@@ -22,7 +22,9 @@ const App = () => {
             setResults={setResults}/>
         </nav>
         <br/>
-        <LinksTable results={results}/>
+        <LinksTable 
+            results={results}
+            setResults={setResults}/>
       </div>
     </Router>
   );

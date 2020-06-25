@@ -4,7 +4,8 @@ const { getAllLinks,
         createLink,
         createLinkTags, 
         updateLink,
-        getLinkByTag } = require("../db");
+        getLinkByTag,
+        updateClickCount } = require("../db");
 const linkRouter = express.Router();
 const bodyparser = require('body-parser');
 linkRouter.use(bodyparser.json());
@@ -62,7 +63,10 @@ linkRouter.patch('/:id', async (req, res, next) => {
         updateFields.tags = tags;
     }
     
-    updateFields.clicks = clicks;
+    if(clicks){
+        updateFields.clicks = clicks;
+    }
+    
 
     try {
         const updatedLink = await updateLink(id, updateFields);
@@ -72,6 +76,23 @@ linkRouter.patch('/:id', async (req, res, next) => {
             data: updatedLink,
             status: true,
         });
+    } catch (error) {
+        next(error);
+    }
+})
+
+linkRouter.get('/:id', async(req, res, next)=>{
+    console.log('Entered links GET route /:id');
+    const {id}= req.params;
+
+    try {
+        console.log('searching by id: ', id)
+        const link = await updateClickCount(id);
+        res.send({
+            message:'successfully retrieved link',
+            data: link,
+            status: true
+        })
     } catch (error) {
         next(error);
     }

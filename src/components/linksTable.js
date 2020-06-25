@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 //NOTE: LinksArray Props not used! Remove!
-const LinksTable = ({ results }) => {
+const LinksTable = ({ results, setResults }) => {
 
   const handleClick = (event) => {
     // event.preventDefault();
@@ -13,6 +13,11 @@ const LinksTable = ({ results }) => {
     const id = event.target.id;
     if (id) {
       console.log("here's your ID: ", id);
+      axios.get(`/api/links/${id}`)
+        .then((res)=>axios.get('/api/links'))
+        .then((res)=>{
+          setResults(res.data.links);
+        })
     }
   }
 
