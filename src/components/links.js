@@ -7,12 +7,13 @@ import axios from "axios";
 const Links = ({ linksArray, results }) => {
 
   const handleClick = (event) => {
-    event.preventDefault();
+    // event.preventDefault();
     console.log('testing click handler');
-    const key = event.target.id
-    console.log("here's your key, maybe? ", key);
+    const id = event.target.id;
+    console.log("here's your key, maybe? ", id);
 
   }
+
 
   return (
     <div>
@@ -21,7 +22,8 @@ const Links = ({ linksArray, results }) => {
       {results.map(({ id, url, clicks, comments }) => {
           const urlString = `http://${url}`;
         return (
-          <List.Item key={id}>
+          <List.Item key={id}
+              id={id}>
             <List.Icon name="marker" />
             <List.Content>
               <List.Header><a href = {urlString} target='_blank'>

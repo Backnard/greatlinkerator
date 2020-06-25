@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { SearchResult } from "semantic-ui-react"; //This is redundant
-import { LinkList, SearchBar, SearchResults, Links, SearchCreate, CreateElementModal } from "./components";
+import { LinkList, SearchBar, SearchResults, Links, SearchCreate, CreateElementModal, LinksTable } from "./components";
 
 const App = () => {
 
@@ -22,7 +22,7 @@ const App = () => {
             setResults={setResults}/>
         </nav>
         <br/>
-        <Links results={results}/>
+        <LinksTable results={results}/>
       </div>
     </Router>
   );
