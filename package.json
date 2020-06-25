@@ -23,8 +23,10 @@
     "nodemon": "^2.0.4",
     "pg": "^8.2.1",
     "react": "^16.13.1",
+    "react-copy-to-clipboard": "^5.0.2",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
+    "react-share": "^4.2.0",
     "semantic-ui-react": "^0.88.2"
   },
   "browserslist": {
