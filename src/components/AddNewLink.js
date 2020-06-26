@@ -1,4 +1,5 @@
-import React, {} from 'react'
+import React, {} from 'react';
+import { Form } from 'semantic-ui-react';
 
 
 const AddNewLink = () =>{
@@ -11,16 +12,14 @@ const AddNewLink = () =>{
   }
 
   return (
-      <div>
-      <form onSubmit={
-      handleSubmit
-      }
-
-      >
-      <input type="text" name="LINKDATA" placeholder="ADD NEW LINK TO SAVE" />
-      <button type="submit">ADD NEW LINK</button>
-      </form>
-      </div>)
+    <Form>
+    <Form.Group widths='equal'>
+      <Form.Input fluid label='URL' placeholder='www.YOUR_URL.com' />
+      <Form.Input fluid label='Comments' placeholder='I love this site...' />
+    </Form.Group>
+    <Form.Button onSubmit={handleSubmit}>Submit</Form.Button>
+  </Form>
+  )
       }
 
 
