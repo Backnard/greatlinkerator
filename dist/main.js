@@ -84003,60 +84003,76 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
 const AddNewLink = () => {
-  const initialFormData = Object.freeze({
-    url: '',
-    comment: '',
-    tags: []
-  });
+  const initialFormData = Object.freeze({});
   const [formData, setFormData] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialFormData);
+  const {
+    url,
+    comment,
+    tags
+  } = formData;
 
-  const handleChange = e => {
-    let tagsArray = [];
-
-    if (e.target.name === 'tags') {
-      console.log('IM A TAG DAMNIT', e.target.value);
-      const stringTags = e.target.value;
-      tagsArray = stringTags.split(',');
-    }
-
+  const handleURL = e => {
     setFormData({ ...formData,
-      // Trimming any whitespace
-      [e.target.name]: e.target.value.trim()
+      url: e.target.value
+    });
+  };
+
+  const handleComments = e => {
+    setFormData({ ...formData,
+      comment: e.target.value
+    });
+  };
+
+  const handleTags = e => {
+    const tagsString = e.target.value;
+    const tagsArray = tagsString.split(',');
+    setFormData({ ...formData,
+      tags: tagsArray
     });
   };
 
   const handleSubmit = e => {
     e.preventDefault();
     console.log(formData); // ... submit to API or something
+
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/links', formData).then(res => {
+      console.log('new tag created:', res.data.data);
+    });
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"], {
+    onSubmit: handleSubmit
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
     widths: "equal"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Input, {
     fluid: true,
     label: "URL",
     placeholder: "www.YOUR_URL.com",
     name: "url",
-    onChange: handleChange
+    value: url,
+    onChange: handleURL
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Input, {
     fluid: true,
     label: "Comments",
     placeholder: "I love this site...",
     name: "comment",
-    onChange: handleChange
+    value: comment,
+    onChange: handleComments
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Input, {
     fluid: true,
     label: "tags",
     placeholder: "Seperate tags by comma (,)",
     name: "tags",
-    onChange: handleChange
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Button, {
-    onClick: handleSubmit
-  }, "Submit"));
+    value: tags,
+    onChange: handleTags
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Button, null, "Submit"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (AddNewLink);

@@ -26,7 +26,7 @@ linkRouter.get("/", async (req, res, next) => {
 
 // POST /api/links (creates tags during link creation)
 linkRouter.post("/", async (req, res, next) => {
-    const {url, comment, date} = req.body;
+    const {url, comment, date, tags=[]} = req.body;
     console.log('Entered /links POST. req.body: ', req.body);
 
     try {
@@ -34,7 +34,8 @@ linkRouter.post("/", async (req, res, next) => {
         const link = await createLink({
             url,
             comment,
-            date
+            date,
+            tags
         })
 
         console.log('New link created: ', link);

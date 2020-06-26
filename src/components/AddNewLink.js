@@ -1,55 +1,70 @@
 import React, {setState, useState} from 'react';
 import { Form } from 'semantic-ui-react';
+import axios from 'axios';
 
 
 const AddNewLink = () =>{
-    const initialFormData = Object.freeze({url:'', comment: '', tags:[]})
+    const initialFormData = Object.freeze({})
 
     const [formData, setFormData] = useState(initialFormData);
+    const {url, comment, tags} = formData;
 
-
-const handleChange = (e) => {
-    let tagsArray=[];
-    if(e.target.name==='tags'){
-        console.log('IM A TAG DAMNIT', e.target.value);
-        const stringTags = e.target.value;
-        tagsArray = stringTags.split(',');
-    }
+const handleURL = (e) => {
     setFormData({
-      ...formData,
-
-      // Trimming any whitespace
-      [e.target.name]: e.target.value.trim()
-    
+        ...formData, url : e.target.value
     });
 
-  };
+}
+
+const handleComments = (e) => {
+    setFormData({
+        ...formData,comment : e.target.value
+    });
+}
+
+const handleTags = (e) => {
+    const tagsString = e.target.value;
+    const tagsArray = tagsString.split(',');
+    setFormData({
+        ...formData,tags : tagsArray
+    });
+}
+
   
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData);
     // ... submit to API or something
+    axios.post('/api/links', formData)
+        .then((res)=>{
+            console.log('new tag created:', res.data.data);
+        })
+    
 
   };
 
   return (
-    <Form>
+     
+    <Form onSubmit={handleSubmit}>
     <Form.Group widths='equal'>
       <Form.Input fluid label='URL' placeholder='www.YOUR_URL.com'
       name='url'
-      onChange={handleChange} />
+      value = {url}
+      onChange={handleURL} />
       <Form.Input fluid label='Comments' placeholder='I love this site...' 
       name='comment'
-      onChange={handleChange} />
+      value={comment}
+      onChange={handleComments} />
       <Form.Input fluid label='tags'
       placeholder='Seperate tags by comma (,)'
       name='tags'
-      onChange={handleChange} />
+      value={tags}
+      onChange={handleTags} />
     </Form.Group>
-    <Form.Button onClick={handleSubmit}>Submit</Form.Button>
+    <Form.Button>Submit</Form.Button>
   </Form>
   )
-      }
+}
 
 
   export default AddNewLink;
