@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 // import { List } from "semantic-ui-react";
 import { Header, Table, Rating } from "semantic-ui-react";
-import { Link } from "react-router-dom";
 import axios from "axios";
 
-//NOTE: LinksArray Props not used! Remove!
+
 const LinksTable = ({ results, setResults }) => {
 
   const handleClick = (event) => {
-    // event.preventDefault();
+
     console.log('testing click handler');
     const id = event.target.id;
     if (id) {
@@ -16,7 +15,7 @@ const LinksTable = ({ results, setResults }) => {
       axios.get(`/api/links/${id}`)
         .then((res)=>axios.get('/api/links'))
         .then((res)=>{
-          setResults(res.data.links);
+          setResults({links:res.data.links});
         })
     }
   }

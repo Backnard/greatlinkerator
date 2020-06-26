@@ -3,11 +3,13 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { SearchResult } from "semantic-ui-react"; //This is redundant
-import { LinkList, SearchBar, SearchResults, Links, SearchCreate, CreateElementModal, LinksTable } from "./components";
+import { LinkList, SearchBar, SearchResults, Links, SearchCreate, CreateElementModal, LinksTable, addNewLink ,AddNewLink } from "./components";
 
 const App = () => {
 
+
   const [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   return (
     <Router>
@@ -16,10 +18,14 @@ const App = () => {
           <SearchBar
             results={results}
             setResults={setResults}
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
             />
+          <AddNewLink></AddNewLink>
           <LinkList
             results={results}
-            setResults={setResults}/>
+            setResults={setResults}
+            searchTerm={searchTerm}/>
         </nav>
         <br/>
         <LinksTable 

@@ -1,7 +1,7 @@
 import React, {} from 'react'
 
 
-const addNewLink = () =>{
+const AddNewLink = () =>{
   const handleSubmit = (event) => {
       const linkFormData = new FormData(event.target);
       event.preventDefault();
@@ -24,4 +24,4 @@ const addNewLink = () =>{
       }
 
 
-  export default addNewLink;
+  export default AddNewLink;

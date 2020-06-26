@@ -22,7 +22,7 @@ useEffect(()=>{
 
   return (
     <div>
-      <button onClick={() => sortResultsByUrl(results)}>Sort by url</button>
+      <button onClick={() => sortResultsByUrl(results.links)}>Sort by url</button>
       <button onClick={() => sortResultsByClick(results)}>Sort by click</button>
       <List>
         {results.map(({ id, url, clicks, comments }) => {
