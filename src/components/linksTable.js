@@ -4,19 +4,19 @@ import { Header, Table, Rating } from "semantic-ui-react";
 import axios from "axios";
 
 
-const LinksTable = ({ results, setResults }) => {
+const LinksTable = ({ results, setResults, setRefresh }) => {
 
-  const handleClick = (event) => {
-
+  const handleClick = async (event) => {
+    event.preventDefault();
     console.log('testing click handler');
     const id = event.target.id;
     if (id) {
       console.log("here's your ID: ", id);
       axios.get(`/api/links/${id}`)
-        .then((res)=>axios.get('/api/links'))
-        .then((res)=>{
-          setResults({links:res.data.links});
-        })
+      .then(()=>{
+        return setRefresh(true);
+      })
+
     }
   }
 

@@ -84007,13 +84007,31 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const AddNewLink = () => {
-  const handleSubmit = event => {
-    const linkFormData = new FormData(event.target);
-    event.preventDefault();
+  const initialFormData = Object.freeze({
+    url: '',
+    comment: '',
+    tags: []
+  });
+  const [formData, setFormData] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialFormData);
 
-    for (let [key, value] of linkFormData.entries()) {
-      console.log(key, value);
+  const handleChange = e => {
+    let tagsArray = [];
+
+    if (e.target.name === 'tags') {
+      console.log('IM A TAG DAMNIT', e.target.value);
+      const stringTags = e.target.value;
+      tagsArray = stringTags.split(',');
     }
+
+    setFormData({ ...formData,
+      // Trimming any whitespace
+      [e.target.name]: e.target.value.trim()
+    });
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(formData); // ... submit to API or something
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Group, {
@@ -84021,13 +84039,23 @@ const AddNewLink = () => {
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Input, {
     fluid: true,
     label: "URL",
-    placeholder: "www.YOUR_URL.com"
+    placeholder: "www.YOUR_URL.com",
+    name: "url",
+    onChange: handleChange
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Input, {
     fluid: true,
     label: "Comments",
-    placeholder: "I love this site..."
+    placeholder: "I love this site...",
+    name: "comment",
+    onChange: handleChange
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Input, {
+    fluid: true,
+    label: "tags",
+    placeholder: "Seperate tags by comma (,)",
+    name: "tags",
+    onChange: handleChange
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Button, {
-    onSubmit: handleSubmit
+    onClick: handleSubmit
   }, "Submit"));
 };
 
@@ -84061,14 +84089,17 @@ __webpack_require__.r(__webpack_exports__);
 const linkList = ({
   results,
   setResults,
-  searchTerm
+  searchTerm,
+  setRefresh,
+  refresh
 }) => {
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/links").then(resp => {
       console.log("Entered Components LinkList. Returning links:", resp.data.links);
+      setRefresh(false);
       return setResults(resp.data.links);
     });
-  }, [!searchTerm.length]);
+  }, [refresh === true]);
 
   function sortByUrl(event) {
     event.preventDefault();
@@ -84178,7 +84209,8 @@ const searchBar = ({
   results,
   setResults,
   searchTerm,
-  setSearchTerm
+  setSearchTerm,
+  setRefresh
 }) => {
   function searchMatches(result, compare) {
     console.log('searchMatches, results: ', results, 'compare: ', compare);
@@ -84197,6 +84229,7 @@ const searchBar = ({
   const handleLinkChange = event => {
     event.preventDefault();
     setSearchTerm(event.target.value);
+    setRefresh(true);
     console.log('SearchBar results: ', results);
     let filteredResults = results.filter(result => searchMatches(result, searchTerm));
     console.log("your filtered search results: ", filteredResults);
@@ -84397,18 +84430,18 @@ __webpack_require__.r(__webpack_exports__);
 
 const LinksTable = ({
   results,
-  setResults
+  setResults,
+  setRefresh
 }) => {
-  const handleClick = event => {
+  const handleClick = async event => {
+    event.preventDefault();
     console.log('testing click handler');
     const id = event.target.id;
 
     if (id) {
       console.log("here's your ID: ", id);
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/api/links/${id}`).then(res => axios__WEBPACK_IMPORTED_MODULE_2___default.a.get('/api/links')).then(res => {
-        setResults({
-          links: res.data.links
-        });
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/api/links/${id}`).then(() => {
+        return setRefresh(true);
       });
     }
   };
@@ -84482,18 +84515,26 @@ __webpack_require__.r(__webpack_exports__);
 const App = () => {
   const [results, setResults] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]);
   const [searchTerm, setSearchTerm] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])('');
+  const [refresh, setRefresh] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("nav", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["SearchBar"], {
     results: results,
     setResults: setResults,
     searchTerm: searchTerm,
-    setSearchTerm: setSearchTerm
+    setSearchTerm: setSearchTerm,
+    refresh: refresh,
+    setRefresh: setRefresh
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["AddNewLink"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["LinkList"], {
     results: results,
     setResults: setResults,
-    searchTerm: searchTerm
+    searchTerm: searchTerm,
+    setRefresh: setRefresh,
+    refresh: refresh
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["LinksTable"], {
     results: results,
-    setResults: setResults
+    setResults: setResults,
+    searchTerm: searchTerm,
+    refresh: refresh,
+    setRefresh: setRefresh
   })));
 };
 

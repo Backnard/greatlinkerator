@@ -7,7 +7,9 @@ import { render } from "react-dom";
 const linkList = ({
   results,
   setResults,
-  searchTerm
+  searchTerm,
+  setRefresh,
+  refresh
 }) => {
 
   useEffect(() => {
@@ -16,10 +18,10 @@ const linkList = ({
         "Entered Components LinkList. Returning links:",
         resp.data.links
       );
-      
+      setRefresh(false);
       return setResults(resp.data.links);
     });
-  }, [!searchTerm.length]);
+  }, [refresh=== true]);
 
   function sortByUrl(event) {
     event.preventDefault();

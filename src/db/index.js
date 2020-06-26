@@ -5,7 +5,7 @@ const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/
 const db = new Client(connectionString);
 
 //create link
-async function createLink({url, comment, date=null }) {
+async function createLink({url, comment, date=null, tags=[]}) {
 
     try {
         console.log('Entered db createLink: ', url, 'comment:',comment, 'date:',date);
@@ -15,7 +15,14 @@ async function createLink({url, comment, date=null }) {
     RETURNING *;
     `, [url, comment, date]);
 
+    const {id} = newLink;
+
     console.log('From db: created new link: ', newLink);
+        if(tags.length){
+            const insertedTags = await createTags(tags);
+            console.log('db createlink addtagstolink tags:', tags);
+            await addTagsToLink(id, insertedTags);
+        }
         return newLink;
     } catch (error) {
         throw error;
@@ -71,6 +78,7 @@ async function createTags(tags) {
         `,Object.values(tags));
 
         console.log('inserted tags: ', insertedTags)
+
         return insertedTags;
 
     } catch (error) {
@@ -97,7 +105,8 @@ async function createLinkTags(linkId, tagId) {
 }
 
 async function addTagsToLink(linkId, tags) {
-    console.log('Entered db addTagsToLink');
+
+    console.log('Entered db addTagsToLink with tags:', tags);
 
     try {
         const tagLinkPromises= tags.map(tag=>{

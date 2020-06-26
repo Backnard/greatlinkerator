@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 
-const searchBar = ({ results, setResults, searchTerm, setSearchTerm }) => {
+const searchBar = ({ results, setResults, searchTerm, setSearchTerm, setRefresh }) => {
 
 
   function searchMatches(result, compare) {
@@ -28,6 +28,7 @@ const searchBar = ({ results, setResults, searchTerm, setSearchTerm }) => {
   const handleLinkChange = event => {
     event.preventDefault();
     setSearchTerm( event.target.value)
+    setRefresh(true);
     
 
     console.log('SearchBar results: ', results);

@@ -84,6 +84,8 @@ async function testDB() {
 
     linksArray.forEach((link, index)=>addTagsToLink(index+1,tags));
 
+    const newTag = await createLink({url: 'www.fullstackacademy.com', comment: ' give them your money!', tags:['New tag for new link', 'Tag for one-stop link creator']});
+
     await deleteLink(1);
 }
 
