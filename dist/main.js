@@ -84112,6 +84112,7 @@ const linkList = ({
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
     axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/links").then(resp => {
       console.log("Entered Components LinkList. Returning links:", resp.data.links);
+      console.log('refresh is set to:', refresh);
       setRefresh(false);
       return setResults(resp.data.links);
     });
@@ -84244,8 +84245,13 @@ const searchBar = ({
 
   const handleLinkChange = event => {
     event.preventDefault();
-    setSearchTerm(event.target.value);
-    setRefresh(true);
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm);
+
+    if (!searchTerm || !searchTerm.length) {
+      setRefresh(true);
+    }
+
     console.log('SearchBar results: ', results);
     let filteredResults = results.filter(result => searchMatches(result, searchTerm));
     console.log("your filtered search results: ", filteredResults);

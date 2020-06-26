@@ -18,6 +18,7 @@ const linkList = ({
         "Entered Components LinkList. Returning links:",
         resp.data.links
       );
+      console.log('refresh is set to:', refresh);
       setRefresh(false);
       return setResults(resp.data.links);
     });

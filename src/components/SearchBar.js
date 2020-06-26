@@ -27,8 +27,12 @@ const searchBar = ({ results, setResults, searchTerm, setSearchTerm, setRefresh 
 
   const handleLinkChange = event => {
     event.preventDefault();
-    setSearchTerm( event.target.value)
-    setRefresh(true);
+    const searchTerm = event.target.value;
+    setSearchTerm(searchTerm)
+    if(!searchTerm||!searchTerm.length){
+      setRefresh(true);
+    }
+  
     
 
     console.log('SearchBar results: ', results);
