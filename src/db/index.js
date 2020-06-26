@@ -172,7 +172,8 @@ async function getAllLinks() {
     console.log('Entered db getAllLinks');
 
     const { rows: links } = await db.query(`
-        SELECT * FROM links;
+        SELECT * FROM links
+        ORDER BY url ASC;
     `)
 
     console.log('All Links:', links);

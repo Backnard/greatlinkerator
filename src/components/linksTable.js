@@ -13,12 +13,16 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
     if (id) {
       console.log("here's your ID: ", id);
       axios.get(`/api/links/${id}`)
+
+      //REMOVING LIST REFRESH! PUT BACK???
       .then(()=>{
         return setRefresh(true);
       })
 
     }
   }
+
+
 
 
   return (

@@ -24,7 +24,8 @@ const App = () => {
             refresh={refresh}
             setRefresh={setRefresh}
             />
-          <AddNewLink></AddNewLink>
+          <AddNewLink
+            setRefresh={setRefresh}/>
           <LinkList
             results={results}
             setResults={setResults}

@@ -3,7 +3,7 @@ import { Form } from 'semantic-ui-react';
 import axios from 'axios';
 
 
-const AddNewLink = () =>{
+const AddNewLink = ({setRefresh}) =>{
     const initialFormData = Object.freeze({})
 
     const [formData, setFormData] = useState(initialFormData);
@@ -38,6 +38,8 @@ const handleTags = (e) => {
     axios.post('/api/links', formData)
         .then((res)=>{
             console.log('new tag created:', res.data.data);
+            setRefresh(true);
+
         })
     
 

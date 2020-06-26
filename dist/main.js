@@ -84009,7 +84009,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const AddNewLink = () => {
+const AddNewLink = ({
+  setRefresh
+}) => {
   const initialFormData = Object.freeze({});
   const [formData, setFormData] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialFormData);
   const {
@@ -84044,6 +84046,7 @@ const AddNewLink = () => {
 
     axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/links', formData).then(res => {
       console.log('new tag created:', res.data.data);
+      setRefresh(true);
     });
   };
 
@@ -84462,7 +84465,8 @@ const LinksTable = ({
 
     if (id) {
       console.log("here's your ID: ", id);
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/api/links/${id}`).then(() => {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get(`/api/links/${id}`) //REMOVING LIST REFRESH! PUT BACK???
+      .then(() => {
         return setRefresh(true);
       });
     }
@@ -84545,7 +84549,9 @@ const App = () => {
     setSearchTerm: setSearchTerm,
     refresh: refresh,
     setRefresh: setRefresh
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["AddNewLink"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["LinkList"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["AddNewLink"], {
+    setRefresh: setRefresh
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["LinkList"], {
     results: results,
     setResults: setResults,
     searchTerm: searchTerm,
