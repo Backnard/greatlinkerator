@@ -21,9 +21,6 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
     }
   }
 
-
-
-
   return (
     <Table celled padded>
     <Table.Header>

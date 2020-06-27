@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
-import { List,
+import {
+  List,
   Button,
   Divider,
   Grid,
@@ -11,14 +12,15 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 
-const searchBar = ({ results, setResults, searchTerm, setSearchTerm, setRefresh }) => {
+const searchBar = ({ results, setResults, setRefresh }) => {
 
 
   function searchMatches(result, compare) {
     console.log('searchMatches, results: ', results, 'compare: ', compare);
-    const { id, url, comments } = result;
+    const { id, url, comments, tags } = result;
+    const tagsString = tags.map(tag=>tag.name).join(', ');
     const newId = id.toString();
-    const filterOn = [newId, url, comments];
+    const filterOn = [newId, url, comments, tagsString];
   
     return filterOn.some((string) => {
       return string.toLowerCase().includes(compare);
@@ -27,14 +29,11 @@ const searchBar = ({ results, setResults, searchTerm, setSearchTerm, setRefresh 
 
   const handleLinkChange = event => {
     event.preventDefault();
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm)
+    const searchTerm = event.target.value.toLowerCase();
     if(!searchTerm||!searchTerm.length){
       setRefresh(true);
     }
   
-    
-
     console.log('SearchBar results: ', results);
       let filteredResults = results.filter((result) =>
       searchMatches(result, searchTerm)

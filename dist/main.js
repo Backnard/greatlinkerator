@@ -84104,11 +84104,18 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const ASCENDING = {
+  url: false,
+  clicks: true,
+  rating: false,
+  ranking: false,
+  comments: false,
+  tags: false
+};
 
 const linkList = ({
   results,
   setResults,
-  searchTerm,
   setRefresh,
   refresh
 }) => {
@@ -84138,19 +84145,75 @@ const linkList = ({
 
       return 0;
     });
+
+    if (ASCENDING.url === true) {
+      newArray.reverse();
+      ASCENDING.url = false;
+    } else {
+      ASCENDING.url = true;
+    }
+
     console.log('results sorted by url: ', newArray);
     setResults(newArray);
   }
 
   ;
 
-  function sortById(event) {
+  function sortByClicks(event) {
+    event.preventDefault();
+    let newArray = [...results];
+    newArray.sort(function (a, b) {
+      return a.clicks - b.clicks;
+    });
+
+    if (ASCENDING.clicks === true) {
+      newArray.reverse();
+      ASCENDING.clicks = false;
+    } else {
+      ASCENDING.clicks = true;
+    }
+
+    console.log('results sorted by clicks: ', newArray);
+    setResults(newArray);
+  }
+
+  ; //change from .id to .rating when done
+
+  function sortByRating(event) {
     event.preventDefault();
     let newArray = [...results];
     newArray.sort(function (a, b) {
       return a.id - b.id;
     });
-    console.log('results sorted by ID: ', newArray);
+
+    if (ASCENDING.id === true) {
+      newArray.reverse();
+      ASCENDING.id = false;
+    } else {
+      ASCENDING.id = true;
+    }
+
+    console.log('results sorted by rating: ', newArray);
+    setResults(newArray);
+  }
+
+  ; //change from .id to .ranking when done
+
+  function sortByRanking(event) {
+    event.preventDefault();
+    let newArray = [...results];
+    newArray.sort(function (a, b) {
+      return a.id - b.id;
+    });
+
+    if (ASCENDING.id === true) {
+      newArray.reverse();
+      ASCENDING.id = false;
+    } else {
+      ASCENDING.id = true;
+    }
+
+    console.log('results sorted by ranking: ', newArray);
     setResults(newArray);
   }
 
@@ -84173,19 +84236,46 @@ const linkList = ({
 
       return 0;
     });
+
+    if (ASCENDING.comments === true) {
+      newArray.reverse();
+      ASCENDING.comments = false;
+    } else {
+      ASCENDING.comments = true;
+    }
+
     console.log('results sorted by comments: ', newArray);
     setResults(newArray);
   }
 
-  ;
+  ; //I think this works? need to create different tags to test
 
-  function sortByClicks(event) {
+  function sortByTags(event) {
     event.preventDefault();
     let newArray = [...results];
     newArray.sort(function (a, b) {
-      return a.clicks - b.clicks;
+      const x = a.tags.map(tag => tag.name.toLowerCase()).join(',');
+      const y = b.tags.map(tag => tag.name.toLowerCase()).join(',');
+
+      if (x < y) {
+        return -1;
+      }
+
+      if (x > y) {
+        return 1;
+      }
+
+      return 0;
     });
-    console.log('results sorted by clicks: ', newArray);
+
+    if (ASCENDING.tags === true) {
+      newArray.reverse();
+      ASCENDING.tags = false;
+    } else {
+      ASCENDING.tags = true;
+    }
+
+    console.log('results sorted by tags: ', newArray);
     setResults(newArray);
   }
 
@@ -84193,12 +84283,16 @@ const linkList = ({
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: sortByUrl
   }, "Sort by url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: sortById
-  }, "Sort by ID"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByClicks
+  }, "Sort by Clicks"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByRating
+  }, "Sort by Rating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByRanking
+  }, "Sort by Ranking"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
     onClick: sortByComments
   }, "Sort by Comments"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: sortByClicks
-  }, "Sort by Clicks"));
+    onClick: sortByTags
+  }, "Sort by Tags"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (linkList);
@@ -84228,8 +84322,6 @@ __webpack_require__.r(__webpack_exports__);
 const searchBar = ({
   results,
   setResults,
-  searchTerm,
-  setSearchTerm,
   setRefresh
 }) => {
   function searchMatches(result, compare) {
@@ -84237,10 +84329,12 @@ const searchBar = ({
     const {
       id,
       url,
-      comments
+      comments,
+      tags
     } = result;
+    const tagsString = tags.map(tag => tag.name).join(', ');
     const newId = id.toString();
-    const filterOn = [newId, url, comments];
+    const filterOn = [newId, url, comments, tagsString];
     return filterOn.some(string => {
       return string.toLowerCase().includes(compare);
     });
@@ -84248,8 +84342,7 @@ const searchBar = ({
 
   const handleLinkChange = event => {
     event.preventDefault();
-    const searchTerm = event.target.value;
-    setSearchTerm(searchTerm);
+    const searchTerm = event.target.value.toLowerCase();
 
     if (!searchTerm || !searchTerm.length) {
       setRefresh(true);
