@@ -84650,10 +84650,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _TableRow__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TableRow */ "./src/components/TableRow.js");
-/* harmony import */ var _EditRow__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EditRow */ "./src/components/EditRow.js");
+/* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../components */ "./src/components/index.js");
  // import { List } from "semantic-ui-react";
-
 
 
 
@@ -84666,7 +84664,7 @@ const LinksTable = ({
 }) => {
   const [editMode, setMode] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
     mode: true,
-    rowId: 6
+    rowId: ''
   });
 
   const handleClick = async event => {
@@ -84691,15 +84689,15 @@ const LinksTable = ({
   }, results.map(result => {
     console.log("map result", result.id, editMode.rowId);
 
-    if (editMode.mode === true && result.id == 6) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditRow__WEBPACK_IMPORTED_MODULE_4__["default"], {
+    if (editMode.mode === true && result.id == editMode.rowId) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_3__["EditRow"], {
         key: result.id,
         result: result,
         setMode: setMode,
         editMode: editMode
       });
     } else {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TableRow__WEBPACK_IMPORTED_MODULE_3__["default"], {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_3__["TableRow"], {
         key: result.id,
         result: result,
         setMode: setMode,

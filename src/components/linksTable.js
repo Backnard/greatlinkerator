@@ -2,12 +2,11 @@ import React, { useState, useEffect } from "react";
 // import { List } from "semantic-ui-react";
 import { Header, Table, Rating, Button, Tab, Icon } from "semantic-ui-react";
 import axios from "axios";
-import TableRow from "./TableRow";
-import EditRow from "./EditRow";
+import { TableRow, EditRow} from "../components";
 
 
 const LinksTable = ({ results, setResults, setRefresh }) => {
-  const [editMode, setMode] = useState({mode: true, rowId: 6});
+  const [editMode, setMode] = useState({mode: true, rowId: ''});
   const handleClick = async (event) => {
     event.preventDefault();
     console.log("testing click handler");
@@ -40,7 +39,7 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
       <Table.Body onClick={handleClick}>
         {results.map((result) => {
           console.log("map result", result.id, editMode.rowId);
-          if (editMode.mode === true && result.id == 6) {
+          if (editMode.mode === true && result.id == editMode.rowId) {
             return (
               <EditRow key={result.id} result={result} setMode={setMode}
               editMode={editMode} />
