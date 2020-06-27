@@ -29,7 +29,8 @@ async function createDB() {
             url VARCHAR(255) UNIQUE,
             clicks INTEGER DEFAULT 0,
             comments TEXT, 
-            share_date DATE DEFAULT CURRENT_TIMESTAMP
+            share_date DATE DEFAULT CURRENT_TIMESTAMP,
+            rating INTEGER DEFAULT 2
         );
         `);
         console.log('links table created');

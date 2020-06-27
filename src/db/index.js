@@ -54,6 +54,7 @@ async function updateLink(linkId, fields={}) {
         `, queryString)
 
         console.log('updated link:', link);
+        return link;
 
     } catch (error) {
         throw error;

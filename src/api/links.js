@@ -48,10 +48,10 @@ linkRouter.post("/", async (req, res, next) => {
         next(error)
     }
 })
-// PATCH /api/links/:id (used both to update comment/tags as well as to increment the click count)
+
 linkRouter.patch('/:id', async (req, res, next) => {
     const {id} = req.params;
-    const {comments, tags, clicks} = req.body;
+    const {comments, tags, clicks, rating} = req.body;
     const updateFields = {};
 
     console.log('Entered /links/:id PATCH. id: ', id, 'req.body: ', req.body);
@@ -67,6 +67,11 @@ linkRouter.patch('/:id', async (req, res, next) => {
     if(clicks){
         updateFields.clicks = clicks;
     }
+
+    if(rating){
+        updateFields.rating = rating;
+    }
+
     
 
     try {
