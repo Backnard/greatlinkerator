@@ -5,7 +5,6 @@ import axios from "axios";
 
 
 const LinksTable = ({ results, setResults, setRefresh }) => {
-
   const handleClick = async (event) => {
     event.preventDefault();
     console.log('testing click handler');
@@ -34,11 +33,14 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
         <Table.HeaderCell>Rating</Table.HeaderCell>
         <Table.HeaderCell>Ranking</Table.HeaderCell>
         <Table.HeaderCell>Comments</Table.HeaderCell>
+        <Table.HeaderCell>Tags</Table.HeaderCell>
       </Table.Row>
     </Table.Header>
     <Table.Body onClick={handleClick}>
-      {results.map(({ id, url, clicks, comments }) => {
+      {results.map(({ id, url, clicks, comments, tags }) => {
           const urlString = `http://${url}`;
+          const tagsString = tags.map(tag=>tag.name).join(', ');
+          console.log(tagsString);
         return (
             <Table.Row key={id}>
             <Table.Cell>
@@ -56,6 +58,9 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
             </Table.Cell>
             <Table.Cell>
               {comments}
+            </Table.Cell>
+            <Table.Cell>
+              {tagsString}
             </Table.Cell>
           </Table.Row>
         );

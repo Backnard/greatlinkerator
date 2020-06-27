@@ -1,4 +1,4 @@
-const { db, createLink, updateLink, createTags, createLinkTags, addTagsToLink, deleteLink } = require('./index');
+const { db, createLink, updateLink, createTags, createLinkTags, addTagsToLink, deleteLink, getAllLinks } = require('./index');
 
 async function dropTables() {
 console.log('Entered seed.js dropTable');
@@ -87,6 +87,8 @@ async function testDB() {
     const newTag = await createLink({url: 'www.fullstackacademy.com', comment: ' give them your money!', tags:['New tag for new link', 'Tag for one-stop link creator']});
 
     await deleteLink(1);
+
+    await getAllLinks();
 }
 
 

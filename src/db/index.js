@@ -169,15 +169,25 @@ async function getLinkById(linkId) {
 }
 
 async function getAllLinks() {
-    console.log('Entered db getAllLinks');
 
-    const { rows: links } = await db.query(`
-        SELECT * FROM links
-        ORDER BY url ASC;
-    `)
+    try {
+        console.log('Entered db getAllLinks');
 
-    console.log('All Links:', links);
-    return links;
+        const { rows: linksIds } = await db.query(`
+            SELECT id FROM links
+            ORDER BY url ASC;
+
+        `);
+        const links = await Promise.all(
+            linksIds.map((link) => getLinkById(link.id))
+        );
+
+        console.log('All Links:', links);
+        return links;
+
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function deleteLink(linkId) {
@@ -239,13 +249,19 @@ async function getLinkByTag(tag) {
 }
 
 async function searchAllLinks(searchTerm) {
-    let searchResults =[];
-    const promiseArray = [getLinkByTag(searchTerm), getLinkByUrl(searchTerm)];
-    const results = await Promise.all(promiseArray);
 
-    
-    console.log(results);
+    try {
+        let searchResults =[];
+        const promiseArray = [getLinkByTag(searchTerm), getLinkByUrl(searchTerm)];
+        const results = await Promise.all(promiseArray);
+        console.log(results);
+    } catch (error) {
+        throw error;
+    }
+
 }
+
+
 
 module.exports= { 
     db, 
