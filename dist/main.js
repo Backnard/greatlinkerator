@@ -84082,6 +84082,121 @@ const AddNewLink = ({
 
 /***/ }),
 
+/***/ "./src/components/EditRow.js":
+/*!***********************************!*\
+  !*** ./src/components/EditRow.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+
+
+
+
+const EditRow = ({
+  result,
+  setMode,
+  editMode
+}) => {
+  const [input, setInput] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    url: '',
+    comments: '',
+    tags: []
+  });
+  const {
+    id,
+    url,
+    clicks,
+    comments,
+    tags,
+    rating
+  } = result;
+  console.log("Entered Table Rows", result);
+  const urlString = `http://${url}`;
+  const tagsString = tags.map(tag => tag.name).join(", ");
+  console.log(tagsString);
+
+  const handleRate = async (event, data) => {
+    const id = data.rating_id;
+    console.log("From rating:", data.rating, "rating id:", id);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, {
+      rating: data.rating
+    }).then(res => {
+      console.log("Updated links: ", res.data.data);
+      return res.data.data;
+    });
+  };
+
+  const handleUpdate = async (event, data) => {
+    const {
+      name,
+      clicks,
+      id
+    } = data;
+    console.log("Clicked edit. : ", name, clicks);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, {
+      clicks: 252
+    }).then(res => {
+      console.log("Updated click count: ", res.data.data.clicks);
+      return res.data.data.clicks;
+    });
+    console.log("Clicked edit button. data: ", data.data);
+  };
+
+  const handleInput = event => {
+    console.log(event.target);
+    const name = event.target.name;
+  };
+
+  const handleEdit = event => {
+    const id = event.target.id;
+    setMode({
+      mode: false,
+      rowId: id
+    });
+    console.log("mode is: ", editMode);
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Row, {
+    key: id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    onClick: handleEdit
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    name: "url",
+    id: id,
+    placeholder: url,
+    onInput: handleInput
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], null, clicks), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"].Subheader, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    onClick: handleUpdate,
+    data: clicks,
+    name: "clicks",
+    id: id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Icon"], {
+    name: "shop"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Rating"], {
+    icon: "star",
+    defaultRating: rating,
+    maxRating: 3,
+    rating_id: id,
+    onRate: handleRate
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, {
+    textAlign: "right"
+  }, "80% ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#"
+  }, "18 studies")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, comments), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, tagsString));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (EditRow);
+
+/***/ }),
+
 /***/ "./src/components/LinkList.js":
 /*!************************************!*\
   !*** ./src/components/LinkList.js ***!
@@ -84376,10 +84491,10 @@ const searchBar = ({
 
 /***/ }),
 
-/***/ "./src/components/SearchResults.js":
-/*!*****************************************!*\
-  !*** ./src/components/SearchResults.js ***!
-  \*****************************************/
+/***/ "./src/components/TableRow.js":
+/*!************************************!*\
+  !*** ./src/components/TableRow.js ***!
+  \************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -84387,49 +84502,99 @@ const searchBar = ({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
 
 
 
 
-
-const searchResults = ({
-  results,
-  sortResultsByClick,
-  sortResultsByUrl,
-  setResults,
-  params
+const TableRow = ({
+  result,
+  setMode,
+  editMode
 }) => {
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get('/api/links').then(res => {
-      console.log('Initial results: ', res.data.data);
-      return setResults(res.data.links);
-    });
-  }, []);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: () => sortResultsByUrl(results.links)
-  }, "Sort by url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: () => sortResultsByClick(results)
-  }, "Sort by click"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"], null, results.map(({
+  const {
     id,
     url,
     clicks,
-    comments
-  }) => {
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, {
-      key: id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
-      name: "marker"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, {
-      as: "a"
-    }, url), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, null, comments)));
-  })));
+    comments,
+    tags,
+    rating
+  } = result;
+  console.log("Entered Table Rows", result);
+  const urlString = `http://${url}`;
+  const tagsString = tags.map(tag => tag.name).join(", ");
+  console.log(tagsString);
+
+  const handleRate = async (event, data) => {
+    const id = data.rating_id;
+    console.log("From rating:", data.rating, "rating id:", id);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, {
+      rating: data.rating
+    }).then(res => {
+      console.log("Updated links: ", res.data.data);
+      return res.data.data;
+    });
+  };
+
+  const handleUpdate = async (event, data) => {
+    const {
+      name,
+      clicks,
+      id
+    } = data;
+    console.log("Clicked edit. : ", name, clicks);
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, {
+      clicks: 252
+    }).then(res => {
+      console.log("Updated click count: ", res.data.data.clicks);
+      return res.data.data.clicks;
+    });
+    console.log("Clicked edit button. data: ", data.data);
+  };
+
+  const handleEdit = event => {
+    const id = event.target.id;
+    setMode({
+      mode: true,
+      rowId: id
+    });
+    console.log("mode is: ", editMode);
+  };
+
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Row, {
+    key: id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    id: id,
+    onClick: handleEdit
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], {
+    as: "a",
+    href: urlString,
+    target: "_blank",
+    textAlign: "center",
+    id: id
+  }, url)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], null, clicks), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"].Subheader, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    onClick: handleUpdate,
+    data: clicks,
+    name: "clicks",
+    id: id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Icon"], {
+    name: "shop"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Rating"], {
+    icon: "star",
+    defaultRating: rating,
+    maxRating: 3,
+    rating_id: id,
+    onRate: handleRate
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, {
+    textAlign: "right"
+  }, "80% ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+    href: "#"
+  }, "18 studies")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, comments), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, tagsString));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (searchResults);
+/* harmony default export */ __webpack_exports__["default"] = (TableRow);
 
 /***/ }),
 
@@ -84437,7 +84602,7 @@ const searchResults = ({
 /*!*********************************!*\
   !*** ./src/components/index.js ***!
   \*********************************/
-/*! exports provided: SearchBar, SearchResults, Links, LinkList, LinksTable, AddNewLink */
+/*! exports provided: SearchBar, LinkList, LinksTable, AddNewLink, TableRow, EditRow */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84446,22 +84611,20 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBar */ "./src/components/SearchBar.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SearchBar", function() { return _SearchBar__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _SearchResults__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SearchResults */ "./src/components/SearchResults.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SearchResults", function() { return _SearchResults__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _LinkList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LinkList */ "./src/components/LinkList.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinkList", function() { return _LinkList__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
-/* harmony import */ var _links__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./links */ "./src/components/links.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Links", function() { return _links__WEBPACK_IMPORTED_MODULE_3__["default"]; });
+/* harmony import */ var _linksTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./linksTable */ "./src/components/linksTable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinksTable", function() { return _linksTable__WEBPACK_IMPORTED_MODULE_3__["default"]; });
 
-/* harmony import */ var _LinkList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./LinkList */ "./src/components/LinkList.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinkList", function() { return _LinkList__WEBPACK_IMPORTED_MODULE_4__["default"]; });
+/* harmony import */ var _AddNewLink__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./AddNewLink */ "./src/components/AddNewLink.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AddNewLink", function() { return _AddNewLink__WEBPACK_IMPORTED_MODULE_4__["default"]; });
 
-/* harmony import */ var _linksTable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./linksTable */ "./src/components/linksTable.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinksTable", function() { return _linksTable__WEBPACK_IMPORTED_MODULE_5__["default"]; });
+/* harmony import */ var _TableRow__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./TableRow */ "./src/components/TableRow.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TableRow", function() { return _TableRow__WEBPACK_IMPORTED_MODULE_5__["default"]; });
 
-/* harmony import */ var _AddNewLink__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AddNewLink */ "./src/components/AddNewLink.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AddNewLink", function() { return _AddNewLink__WEBPACK_IMPORTED_MODULE_6__["default"]; });
-
-
+/* harmony import */ var _EditRow__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./EditRow */ "./src/components/EditRow.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "EditRow", function() { return _EditRow__WEBPACK_IMPORTED_MODULE_6__["default"]; });
 
 
 
@@ -84469,61 +84632,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-/***/ }),
 
-/***/ "./src/components/links.js":
-/*!*********************************!*\
-  !*** ./src/components/links.js ***!
-  \*********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-
-
-
- //NOTE: LinksArray Props not used! Remove!
-
-const Links = ({
-  linksArray,
-  results
-}) => {
-  const handleClick = event => {
-    event.preventDefault();
-    console.log('testing click handler');
-    const id = event.target.id;
-    console.log("here's your key, maybe? ", id);
-  };
-
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Here are your links:"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"], {
-    onClick: handleClick
-  }, results.map(({
-    id,
-    url,
-    clicks,
-    comments
-  }) => {
-    const urlString = `http://${url}`;
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Item, {
-      key: id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Icon, {
-      name: "marker"
-    }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Content, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: urlString,
-      target: "_blank",
-      id: id
-    }, url)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["List"].Description, null, comments)));
-  })));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (Links);
 
 /***/ }),
 
@@ -84541,7 +84650,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _TableRow__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TableRow */ "./src/components/TableRow.js");
+/* harmony import */ var _EditRow__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EditRow */ "./src/components/EditRow.js");
  // import { List } from "semantic-ui-react";
+
+
 
 
 
@@ -84551,9 +84664,14 @@ const LinksTable = ({
   setResults,
   setRefresh
 }) => {
+  const [editMode, setMode] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({
+    mode: true,
+    rowId: 6
+  });
+
   const handleClick = async event => {
     event.preventDefault();
-    console.log('testing click handler');
+    console.log("testing click handler");
     const id = event.target.id;
 
     if (id) {
@@ -84565,75 +84683,29 @@ const LinksTable = ({
     }
   };
 
-  const handleRate = async (event, data) => {
-    const id = data.rating_id;
-    console.log('From rating:', data.rating, 'rating id:', id);
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.patch(`/api/links/${id}`, {
-      rating: data.rating
-    }).then(res => {
-      console.log('Updated links: ', res.data.data);
-      return res.data.data;
-    });
-  };
-
-  const handleUpdate = async (event, data) => {
-    const {
-      name,
-      clicks,
-      id
-    } = data;
-    console.log('Clicked edit. : ', name, clicks);
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.patch(`/api/links/${id}`, {
-      clicks: 252
-    }).then(res => {
-      console.log('Updated click count: ', res.data.data.clicks);
-      return res.data.data.clicks;
-    });
-    console.log('Clicked edit button. data: ', data.data);
-  };
-
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"], {
     celled: true,
     padded: true
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Row, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Link URL"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Click Count"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Rating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Ranking"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Comments"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Tags"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Body, {
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Header, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Row, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Link URL"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Click Count"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Rating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Ranking"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Comments"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].HeaderCell, null, "Tags"))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Body, {
     onClick: handleClick
-  }, results.map(({
-    id,
-    url,
-    clicks,
-    comments,
-    tags,
-    rating
-  }) => {
-    const urlString = `http://${url}`;
-    const tagsString = tags.map(tag => tag.name).join(', ');
-    console.log(tagsString);
-    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Row, {
-      key: id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"], {
-      as: "a",
-      href: urlString,
-      target: "_blank",
-      textAlign: "center",
-      id: id
-    }, url)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"], null, clicks), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"].Subheader, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
-      onClick: handleUpdate,
-      data: clicks,
-      name: 'clicks',
-      id: id
-    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Icon"], {
-      name: "shop"
-    })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Rating"], {
-      icon: "star",
-      defaultRating: rating,
-      maxRating: 3,
-      rating_id: id,
-      onRate: handleRate
-    })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Cell, {
-      textAlign: "right"
-    }, "80% ", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-      href: "#"
-    }, "18 studies")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Cell, null, comments), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Table"].Cell, null, tagsString));
+  }, results.map(result => {
+    console.log("map result", result.id, editMode.rowId);
+
+    if (editMode.mode === true && result.id == 6) {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_EditRow__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        key: result.id,
+        result: result,
+        setMode: setMode,
+        editMode: editMode
+      });
+    } else {
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_TableRow__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        key: result.id,
+        result: result,
+        setMode: setMode,
+        editMode: editMode
+      });
+    }
   })));
 };
 
