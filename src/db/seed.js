@@ -80,7 +80,7 @@ async function testDB() {
 
     await updateLink(1, {comments: 'They own the world', clicks: 52});
 
-    const tags = await createTags(['I need a job', 'Pay me lots of money', 'Will do SQL for Money']);
+    const tags = await createTags(['I would love to work here', 'Experts in SQL']);
 
     console.log('created Tags:', tags);
 
