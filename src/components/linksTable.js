@@ -39,7 +39,8 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
           if (editMode.mode === true && result.id == editMode.rowId) {
             return (
               <EditRow key={result.id} result={result} setMode={setMode}
-              editMode={editMode} />
+              editMode={editMode}
+              setRefresh={setRefresh} />
             );
           } else {
             return <TableRow key={result.id} result={result} 

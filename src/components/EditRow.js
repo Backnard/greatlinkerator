@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Header, Table, Rating, Button, Tab, Icon } from "semantic-ui-react";
 
-const EditRow = ({ result, setMode, editMode }) => {
+const EditRow = ({ result, setMode, setRefresh }) => {
   const [input, setInput] = useState({});
   const { id, url, clicks, comments, tags, rating } = result;
   const urlString = `http://${url}`;
@@ -19,6 +19,7 @@ const EditRow = ({ result, setMode, editMode }) => {
     const { name, clicks, id } = data;
     console.log("Clicked edit. : ", name, clicks);
     axios.patch(`/api/links/${id}`, { clicks: 252 }).then((res) => {
+      setRefresh(true);
       return res.data.data.clicks;
     });
 
@@ -36,10 +37,19 @@ const EditRow = ({ result, setMode, editMode }) => {
     console.log('ID:', id);
     setMode({ mode: false, rowId: id });
     console.log("input: ", input);
-
-    axios.patch(`/api/links/${id}`, input).then((res) => {
-      console.log("tag updated: ", res.data.data);
-    });
+    try {
+      if (!input||input==={}) {
+        console.log('Input length is empty: ',input);
+        return;
+      }
+      axios.patch(`/api/links/${id}`, input).then((res) => {
+        console.log("tag updated: ", res.data.data);
+        return res.data.data;
+      });
+    } catch (error) {
+      throw error;
+    }
+ 
   };
 
   const handleTags = (e) => {

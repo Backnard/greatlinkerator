@@ -84101,7 +84101,7 @@ __webpack_require__.r(__webpack_exports__);
 const EditRow = ({
   result,
   setMode,
-  editMode
+  setRefresh
 }) => {
   const [input, setInput] = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({});
   const {
@@ -84134,6 +84134,7 @@ const EditRow = ({
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, {
       clicks: 252
     }).then(res => {
+      setRefresh(true);
       return res.data.data.clicks;
     });
     console.log("Clicked edit button. data: ", data.data);
@@ -84157,9 +84158,20 @@ const EditRow = ({
       rowId: id
     });
     console.log("input: ", input);
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, input).then(res => {
-      console.log("tag updated: ", res.data.data);
-    });
+
+    try {
+      if (!input || input === {}) {
+        console.log('Input length is empty: ', input);
+        return;
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, input).then(res => {
+        console.log("tag updated: ", res.data.data);
+        return res.data.data;
+      });
+    } catch (error) {
+      throw error;
+    }
   };
 
   const handleTags = e => {
@@ -84750,7 +84762,8 @@ const LinksTable = ({
         key: result.id,
         result: result,
         setMode: setMode,
-        editMode: editMode
+        editMode: editMode,
+        setRefresh: setRefresh
       });
     } else {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_3__["TableRow"], {
