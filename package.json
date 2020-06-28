@@ -8,7 +8,9 @@
     "start:client": "webpack --watch",
     "seed:dev": "node-dev --respawn ./src/db/seed.js",
     "server:dev": "node-dev --respawn ./index.js",
-    "build": "webpack --mode=\"production\""
+    "build": "webpack --mode=\"production\"",
+    "start": "node  ./index.js"
+
   },
   "keywords": [],
   "author": "",
