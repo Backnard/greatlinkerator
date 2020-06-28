@@ -30,8 +30,8 @@ const SortTable = ({
   function sortByUrl(event) {
     event.preventDefault();
     let newArray = [...results];
-
     newArray.sort(function (a, b) {
+
       const x = a.url.toLowerCase();
       const y = b.url.toLowerCase();
       if (x < y) {
@@ -164,7 +164,7 @@ const SortTable = ({
   return (
     <>
       <Button.Group>
-      <Button onClick={sortByUrl}>Sort by url/></Button>
+      <Button onClick={sortByUrl}>Sort by url</Button>
       <Button onClick={sortByClicks}>Sort by Clicks</Button>
       <Button onClick={sortByRating}>Sort by Rating</Button>
       <Button onClick={sortByRanking}>Sort by Ranking</Button>

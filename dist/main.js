@@ -84042,10 +84042,21 @@ const AddNewLink = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/links', formData).then(res => {
-      setFormData({});
-      setRefresh(true);
-    });
+
+    try {
+      if (formData.url === '' || !formData.url) {
+        alert('Please enter a link address');
+        console.log('No url');
+        return;
+      }
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/links', formData).then(res => {
+        setFormData({});
+        setRefresh(true);
+      });
+    } catch (error) {
+      throw error;
+    }
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"], {
@@ -84556,7 +84567,7 @@ const SortTable = ({
   ;
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"].Group, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     onClick: sortByUrl
-  }, "Sort by url/>"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+  }, "Sort by url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     onClick: sortByClicks
   }, "Sort by Clicks"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     onClick: sortByRating

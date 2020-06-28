@@ -33,13 +33,22 @@ const handleTags = (e) => {
   
   const handleSubmit = (e) => {
     e.preventDefault()
+    try {
+      if (formData.url===''||!formData.url) {
+        alert('Please enter a link address');
+        console.log('No url')
+        return;
+      }
+      axios.post('/api/links', formData)
+      .then((res)=>{
+          setFormData({})
+          setRefresh(true);
 
-    axios.post('/api/links', formData)
-        .then((res)=>{
-            setFormData({})
-            setRefresh(true);
-
-        })
+      })
+    } catch (error) {
+      throw error;
+    }
+  
     
 
   };
