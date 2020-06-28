@@ -2,7 +2,7 @@ import React from "react";
 import axios from "axios";
 import { Header, Table, Rating, Button, Tab, Icon } from "semantic-ui-react";
 
-const TableRow = ({result, setMode, editMode}) => {
+const TableRow = ({result, setMode, setRefresh}) => {
   const { id, url, clicks, comments, tags, rating } = result;
   const urlString = `http://${url}`;
   const tagsString = tags.map((tag) => tag.name).join(", ");
@@ -10,17 +10,9 @@ const TableRow = ({result, setMode, editMode}) => {
   const handleRate = async (event, data) => {
     const id = data.rating_id;
     axios.patch(`/api/links/${id}`, { rating: data.rating }).then((res) => {
+      setRefresh(true);
       return res.data.data;
     });
-  };
-
-  const handleUpdate = async (event, data) => {
-    const { name, clicks, id } = data;
-    axios.patch(`/api/links/${id}`, { clicks: 252 }).then((res) => {
-      return res.data.data.clicks;
-    });
-
-    console.log("Clicked edit button. data: ", data.data);
   };
 
   const handleEdit = (event) => {
@@ -58,10 +50,6 @@ const TableRow = ({result, setMode, editMode}) => {
           rating_id={id}
           onRate={handleRate}
         />
-      </Table.Cell>
-      <Table.Cell textAlign="right">
-        80% <br />
-        <a href="#">18 studies</a>
       </Table.Cell>
       <Table.Cell>{comments}</Table.Cell>
       <Table.Cell>{tagsString}</Table.Cell>

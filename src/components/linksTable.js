@@ -11,7 +11,10 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
   const handleClick = async (event, data) => {
     // event.preventDefault();
     const id = event.target.id;
-    if (id) {
+    const urlid=event.target.href;
+    console.log('URL ID: ', urlid);
+    if (urlid) {
+
       axios
         .get(`/api/links/${id}`)
 
@@ -29,7 +32,6 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
           <Table.HeaderCell>Link URL</Table.HeaderCell>
           <Table.HeaderCell>Click Count</Table.HeaderCell>
           <Table.HeaderCell>Rating</Table.HeaderCell>
-          <Table.HeaderCell>Ranking</Table.HeaderCell>
           <Table.HeaderCell>Comments</Table.HeaderCell>
           <Table.HeaderCell>Tags</Table.HeaderCell>
         </Table.Row>
@@ -43,9 +45,11 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
               setRefresh={setRefresh} />
             );
           } else {
-            return <TableRow key={result.id} result={result} 
+            return <TableRow 
+            key={result.id} 
+            result={result} 
             setMode={setMode} 
-            editMode={editMode} />;
+            setRefresh={setRefresh} />;
           }
         })}
       </Table.Body>

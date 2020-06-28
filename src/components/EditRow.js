@@ -34,18 +34,21 @@ const EditRow = ({ result, setMode, setRefresh }) => {
 
   const handleEdit = (event, data) => {
     const id = data.id;
-    console.log('ID:', id);
+    
     setMode({ mode: false, rowId: id });
     console.log("input: ", input);
     try {
-      if (!input||input==={}) {
+      if (!input||input=={}) {
         console.log('Input length is empty: ',input);
         return;
       }
       axios.patch(`/api/links/${id}`, input).then((res) => {
         console.log("tag updated: ", res.data.data);
-        return res.data.data;
+        // setRefresh(true);
+        // return res.data.data;
       });
+      setRefresh(true);
+      
     } catch (error) {
       throw error;
     }
@@ -54,12 +57,14 @@ const EditRow = ({ result, setMode, setRefresh }) => {
 
   const handleTags = (e) => {
     const newTagsString = e.target.value;
+    const id = e.target.id;
     const tagsArray = newTagsString.split(",");
-    console.log('tagsArray: ', tagsArray);
+    console.log('tagsArray: ', tagsArray, 'id:', id);
     setInput({
       ...input,
       tags: tagsArray,
     });
+
   };
 
   return (
@@ -90,10 +95,6 @@ const EditRow = ({ result, setMode, setRefresh }) => {
           onRate={handleRate}
         />
       </Table.Cell>
-      <Table.Cell textAlign="right">
-        80% <br />
-        <a href="#">18 studies</a>
-      </Table.Cell>
       <Table.Cell>
         <input
           name={"comments"}
@@ -108,8 +109,8 @@ const EditRow = ({ result, setMode, setRefresh }) => {
           id={id}
           // placeholder={tagsString}
           defaultValue={tagsString}
-          onInput={handleTags}
-        ></input>
+          onInput={handleTags}>   
+          </input>
         </Table.Cell>
     </Table.Row>
   );

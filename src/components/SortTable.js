@@ -8,7 +8,6 @@ const ASCENDING = {
   url: false,
   clicks: true,
   rating: true,
-  ranking: false,
   comments: false,
   tags: false
 }
@@ -90,24 +89,7 @@ const SortTable = ({
     setResults(newArray);
   };
 
-  function sortByRanking(event) {
-    event.preventDefault();
-    let newArray = [...results];
-
-    newArray.sort(function (a, b) {
-      return a.ranking - b.ranking;
-    });
-
-    if (ASCENDING.ranking === true) {
-      newArray.reverse();
-      ASCENDING.ranking = false;
-    } else {
-      ASCENDING.ranking = true;
-    }
-
-    console.log('results sorted by ranking: ', newArray);
-    setResults(newArray);
-  };
+  
 
   function sortByComments(event) {
     event.preventDefault();
@@ -167,7 +149,7 @@ const SortTable = ({
       <Button onClick={sortByUrl}>Sort by url</Button>
       <Button onClick={sortByClicks}>Sort by Clicks</Button>
       <Button onClick={sortByRating}>Sort by Rating</Button>
-      <Button onClick={sortByRanking}>Sort by Ranking</Button>
+
       <Button onClick={sortByComments}>Sort by Comments</Button>
       <Button onClick={sortByTags}>Sort by Tags</Button>
       </Button.Group>

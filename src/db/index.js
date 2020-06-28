@@ -57,11 +57,11 @@ async function updateLink(linkId, fields = {}) {
       RETURNING tags_id;
       `);
 
-      const deletedTags = linkTags.map(({tags_id:tagId})=>{
-        return deleteTag(tagId);
-      })
+      // const deletedTags = linkTags.map(({tags_id:tagId})=>{
+      //   return deleteTag(tagId);
+      // })
 
-      await Promise.all(deletedTags);
+      // await Promise.all(deletedTags);
 
       const insertedTags = await createTags(tags);
       console.log("Successfully updated tags:", insertedTags);
@@ -115,6 +115,7 @@ async function createTags(tags) {
       `
         INSERT INTO tags(name)
         VALUES (${tagsString})
+        ON CONFLICT(name) DO NOTHING
         RETURNING *;
         `,
       Object.values(tags)

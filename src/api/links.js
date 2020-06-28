@@ -70,8 +70,8 @@ linkRouter.patch('/:id', async (req, res, next) => {
     if(rating){
         updateFields.rating = rating;
     }
+    console.log('Update fields lenght: ', updateFields.length);
 
-    
 
     try {
         const updatedLink = await updateLink(id, updateFields);
