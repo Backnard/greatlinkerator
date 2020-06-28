@@ -7,13 +7,13 @@ import { render } from "react-dom";
 const ASCENDING = {
   url: false,
   clicks: true,
-  rating: false,
+  rating: true,
   ranking: false,
   comments: false,
   tags: false
 }
 
-const linkList = ({
+const SortTable = ({
   results,
   setResults,
   setRefresh,
@@ -71,42 +71,41 @@ const linkList = ({
     setResults(newArray);
   };
 
-  //change from .id to .rating when done
   function sortByRating(event) {
     event.preventDefault();
     let newArray = [...results];
 
     newArray.sort(function (a, b) {
-      return a.id - b.id;
+      return a.rating - b.rating;
     });
 
-    if (ASCENDING.id === true) {
+    if (ASCENDING.rating === true) {
       newArray.reverse();
-      ASCENDING.id = false;
+      ASCENDING.rating = false;
     } else {
-      ASCENDING.id = true;
+      ASCENDING.rating = true;
     }
 
     console.log('results sorted by rating: ', newArray);
     setResults(newArray);
   };
 
-  //change from .id to .ranking when done
   function sortByRanking(event) {
     event.preventDefault();
     let newArray = [...results];
 
     newArray.sort(function (a, b) {
-      return a.id - b.id;
+      return a.ranking - b.ranking;
     });
 
-    if (ASCENDING.id === true) {
+    if (ASCENDING.ranking === true) {
       newArray.reverse();
-      ASCENDING.id = false;
+      ASCENDING.ranking = false;
     } else {
-      ASCENDING.id = true;
+      ASCENDING.ranking = true;
     }
 
+    console.log('results sorted by ranking: ', newArray);
     setResults(newArray);
   };
 
@@ -136,7 +135,6 @@ const linkList = ({
     setResults(newArray);
   };
 
-  //I think this works? need to create different tags to test
   function sortByTags(event) {
     event.preventDefault();
     let newArray = [...results];
@@ -175,4 +173,4 @@ const linkList = ({
   );
 };
 
-export default linkList;
+export default SortTable;

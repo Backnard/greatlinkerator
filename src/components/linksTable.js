@@ -7,8 +7,9 @@ import { TableRow, EditRow} from "../components";
 
 const LinksTable = ({ results, setResults, setRefresh }) => {
   const [editMode, setMode] = useState({mode: true, rowId: ''});
-  const handleClick = async (event) => {
-    event.preventDefault();
+
+  const handleClick = async (event, data) => {
+    // event.preventDefault();
     const id = event.target.id;
     if (id) {
       axios

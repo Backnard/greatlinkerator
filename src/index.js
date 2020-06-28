@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import axios from "axios";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import { SearchResult } from "semantic-ui-react"; //This is redundant
-import { LinkList, SearchBar, LinksTable,AddNewLink } from "./components";
+import { SortTable, SearchBar, LinksTable,AddNewLink } from "./components";
 
 const App = () => {
 
@@ -26,7 +26,7 @@ const App = () => {
             />
           <AddNewLink
             setRefresh={setRefresh}/>
-          <LinkList
+          <SortTable
             results={results}
             setResults={setResults}
             searchTerm={searchTerm}

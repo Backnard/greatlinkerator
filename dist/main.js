@@ -84210,216 +84210,6 @@ const EditRow = ({
 
 /***/ }),
 
-/***/ "./src/components/LinkList.js":
-/*!************************************!*\
-  !*** ./src/components/LinkList.js ***!
-  \************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_4__);
-
-
-
-
-
-const ASCENDING = {
-  url: false,
-  clicks: true,
-  rating: false,
-  ranking: false,
-  comments: false,
-  tags: false
-};
-
-const linkList = ({
-  results,
-  setResults,
-  setRefresh,
-  refresh
-}) => {
-  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
-    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/links").then(resp => {
-      setRefresh(false);
-      return setResults(resp.data.links);
-    });
-  }, [refresh === true]);
-
-  function sortByUrl(event) {
-    event.preventDefault();
-    let newArray = [...results];
-    newArray.sort(function (a, b) {
-      const x = a.url.toLowerCase();
-      const y = b.url.toLowerCase();
-
-      if (x < y) {
-        return -1;
-      }
-
-      if (x > y) {
-        return 1;
-      }
-
-      return 0;
-    });
-
-    if (ASCENDING.url === true) {
-      newArray.reverse();
-      ASCENDING.url = false;
-    } else {
-      ASCENDING.url = true;
-    }
-
-    setResults(newArray);
-  }
-
-  ;
-
-  function sortByClicks(event) {
-    event.preventDefault();
-    let newArray = [...results];
-    newArray.sort(function (a, b) {
-      return a.clicks - b.clicks;
-    });
-
-    if (ASCENDING.clicks === true) {
-      newArray.reverse();
-      ASCENDING.clicks = false;
-    } else {
-      ASCENDING.clicks = true;
-    }
-
-    setResults(newArray);
-  }
-
-  ; //change from .id to .rating when done
-
-  function sortByRating(event) {
-    event.preventDefault();
-    let newArray = [...results];
-    newArray.sort(function (a, b) {
-      return a.id - b.id;
-    });
-
-    if (ASCENDING.id === true) {
-      newArray.reverse();
-      ASCENDING.id = false;
-    } else {
-      ASCENDING.id = true;
-    }
-
-    console.log('results sorted by rating: ', newArray);
-    setResults(newArray);
-  }
-
-  ; //change from .id to .ranking when done
-
-  function sortByRanking(event) {
-    event.preventDefault();
-    let newArray = [...results];
-    newArray.sort(function (a, b) {
-      return a.id - b.id;
-    });
-
-    if (ASCENDING.id === true) {
-      newArray.reverse();
-      ASCENDING.id = false;
-    } else {
-      ASCENDING.id = true;
-    }
-
-    setResults(newArray);
-  }
-
-  ;
-
-  function sortByComments(event) {
-    event.preventDefault();
-    let newArray = [...results];
-    newArray.sort(function (a, b) {
-      const x = a.comments.toLowerCase();
-      const y = b.comments.toLowerCase();
-
-      if (x < y) {
-        return -1;
-      }
-
-      if (x > y) {
-        return 1;
-      }
-
-      return 0;
-    });
-
-    if (ASCENDING.comments === true) {
-      newArray.reverse();
-      ASCENDING.comments = false;
-    } else {
-      ASCENDING.comments = true;
-    }
-
-    setResults(newArray);
-  }
-
-  ; //I think this works? need to create different tags to test
-
-  function sortByTags(event) {
-    event.preventDefault();
-    let newArray = [...results];
-    newArray.sort(function (a, b) {
-      const x = a.tags.map(tag => tag.name.toLowerCase()).join(',');
-      const y = b.tags.map(tag => tag.name.toLowerCase()).join(',');
-
-      if (x < y) {
-        return -1;
-      }
-
-      if (x > y) {
-        return 1;
-      }
-
-      return 0;
-    });
-
-    if (ASCENDING.tags === true) {
-      newArray.reverse();
-      ASCENDING.tags = false;
-    } else {
-      ASCENDING.tags = true;
-    }
-
-    setResults(newArray);
-  }
-
-  ;
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: sortByUrl
-  }, "Sort by url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: sortByClicks
-  }, "Sort by Clicks"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: sortByRating
-  }, "Sort by Rating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: sortByRanking
-  }, "Sort by Ranking"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: sortByComments
-  }, "Sort by Comments"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-    onClick: sortByTags
-  }, "Sort by Tags"));
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (linkList);
-
-/***/ }),
-
 /***/ "./src/components/SearchBar.js":
 /*!*************************************!*\
   !*** ./src/components/SearchBar.js ***!
@@ -84492,6 +84282,217 @@ const searchBar = ({
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (searchBar);
+
+/***/ }),
+
+/***/ "./src/components/SortTable.js":
+/*!*************************************!*\
+  !*** ./src/components/SortTable.js ***!
+  \*************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! semantic-ui-react */ "./node_modules/semantic-ui-react/dist/es/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_4__);
+
+
+
+
+
+const ASCENDING = {
+  url: false,
+  clicks: true,
+  rating: true,
+  ranking: false,
+  comments: false,
+  tags: false
+};
+
+const SortTable = ({
+  results,
+  setResults,
+  setRefresh,
+  refresh
+}) => {
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(() => {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/links").then(resp => {
+      setRefresh(false);
+      return setResults(resp.data.links);
+    });
+  }, [refresh === true]);
+
+  function sortByUrl(event) {
+    event.preventDefault();
+    let newArray = [...results];
+    newArray.sort(function (a, b) {
+      const x = a.url.toLowerCase();
+      const y = b.url.toLowerCase();
+
+      if (x < y) {
+        return -1;
+      }
+
+      if (x > y) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    if (ASCENDING.url === true) {
+      newArray.reverse();
+      ASCENDING.url = false;
+    } else {
+      ASCENDING.url = true;
+    }
+
+    setResults(newArray);
+  }
+
+  ;
+
+  function sortByClicks(event) {
+    event.preventDefault();
+    let newArray = [...results];
+    newArray.sort(function (a, b) {
+      return a.clicks - b.clicks;
+    });
+
+    if (ASCENDING.clicks === true) {
+      newArray.reverse();
+      ASCENDING.clicks = false;
+    } else {
+      ASCENDING.clicks = true;
+    }
+
+    setResults(newArray);
+  }
+
+  ;
+
+  function sortByRating(event) {
+    event.preventDefault();
+    let newArray = [...results];
+    newArray.sort(function (a, b) {
+      return a.rating - b.rating;
+    });
+
+    if (ASCENDING.rating === true) {
+      newArray.reverse();
+      ASCENDING.rating = false;
+    } else {
+      ASCENDING.rating = true;
+    }
+
+    console.log('results sorted by rating: ', newArray);
+    setResults(newArray);
+  }
+
+  ;
+
+  function sortByRanking(event) {
+    event.preventDefault();
+    let newArray = [...results];
+    newArray.sort(function (a, b) {
+      return a.ranking - b.ranking;
+    });
+
+    if (ASCENDING.ranking === true) {
+      newArray.reverse();
+      ASCENDING.ranking = false;
+    } else {
+      ASCENDING.ranking = true;
+    }
+
+    console.log('results sorted by ranking: ', newArray);
+    setResults(newArray);
+  }
+
+  ;
+
+  function sortByComments(event) {
+    event.preventDefault();
+    let newArray = [...results];
+    newArray.sort(function (a, b) {
+      const x = a.comments.toLowerCase();
+      const y = b.comments.toLowerCase();
+
+      if (x < y) {
+        return -1;
+      }
+
+      if (x > y) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    if (ASCENDING.comments === true) {
+      newArray.reverse();
+      ASCENDING.comments = false;
+    } else {
+      ASCENDING.comments = true;
+    }
+
+    setResults(newArray);
+  }
+
+  ;
+
+  function sortByTags(event) {
+    event.preventDefault();
+    let newArray = [...results];
+    newArray.sort(function (a, b) {
+      const x = a.tags.map(tag => tag.name.toLowerCase()).join(',');
+      const y = b.tags.map(tag => tag.name.toLowerCase()).join(',');
+
+      if (x < y) {
+        return -1;
+      }
+
+      if (x > y) {
+        return 1;
+      }
+
+      return 0;
+    });
+
+    if (ASCENDING.tags === true) {
+      newArray.reverse();
+      ASCENDING.tags = false;
+    } else {
+      ASCENDING.tags = true;
+    }
+
+    setResults(newArray);
+  }
+
+  ;
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByUrl
+  }, "Sort by url"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByClicks
+  }, "Sort by Clicks"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByRating
+  }, "Sort by Rating"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByRanking
+  }, "Sort by Ranking"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByComments
+  }, "Sort by Comments"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: sortByTags
+  }, "Sort by Tags"));
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (SortTable);
 
 /***/ }),
 
@@ -84592,7 +84593,7 @@ const TableRow = ({
 /*!*********************************!*\
   !*** ./src/components/index.js ***!
   \*********************************/
-/*! exports provided: SearchBar, LinkList, LinksTable, AddNewLink, TableRow, EditRow */
+/*! exports provided: SearchBar, SortTable, LinksTable, AddNewLink, TableRow, EditRow */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -84601,8 +84602,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SearchBar__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SearchBar */ "./src/components/SearchBar.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SearchBar", function() { return _SearchBar__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
-/* harmony import */ var _LinkList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./LinkList */ "./src/components/LinkList.js");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinkList", function() { return _LinkList__WEBPACK_IMPORTED_MODULE_2__["default"]; });
+/* harmony import */ var _SortTable__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./SortTable */ "./src/components/SortTable.js");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "SortTable", function() { return _SortTable__WEBPACK_IMPORTED_MODULE_2__["default"]; });
 
 /* harmony import */ var _linksTable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./linksTable */ "./src/components/linksTable.js");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "LinksTable", function() { return _linksTable__WEBPACK_IMPORTED_MODULE_3__["default"]; });
@@ -84657,8 +84658,8 @@ const LinksTable = ({
     rowId: ''
   });
 
-  const handleClick = async event => {
-    event.preventDefault();
+  const handleClick = async (event, data) => {
+    // event.preventDefault();
     const id = event.target.id;
 
     if (id) {
@@ -84735,7 +84736,7 @@ const App = () => {
     setRefresh: setRefresh
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["AddNewLink"], {
     setRefresh: setRefresh
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["LinkList"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_5__["SortTable"], {
     results: results,
     setResults: setResults,
     searchTerm: searchTerm,
