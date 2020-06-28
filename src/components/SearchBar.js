@@ -34,11 +34,9 @@ const searchBar = ({ results, setResults, setRefresh }) => {
       setRefresh(true);
     }
   
-    console.log('SearchBar results: ', results);
       let filteredResults = results.filter((result) =>
       searchMatches(result, searchTerm)
     );
-    console.log("your filtered search results: ", filteredResults);
     setResults(filteredResults);
   }
 

@@ -9,14 +9,11 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
   const [editMode, setMode] = useState({mode: true, rowId: ''});
   const handleClick = async (event) => {
     event.preventDefault();
-    console.log("testing click handler");
     const id = event.target.id;
     if (id) {
-      console.log("here's your ID: ", id);
       axios
         .get(`/api/links/${id}`)
 
-        //REMOVING LIST REFRESH! PUT BACK???
         .then(() => {
           return setRefresh(true);
         });
@@ -38,7 +35,6 @@ const LinksTable = ({ results, setResults, setRefresh }) => {
       </Table.Header>
       <Table.Body onClick={handleClick}>
         {results.map((result) => {
-          console.log("map result", result.id, editMode.rowId);
           if (editMode.mode === true && result.id == editMode.rowId) {
             return (
               <EditRow key={result.id} result={result} setMode={setMode}

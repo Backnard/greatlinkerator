@@ -8,7 +8,6 @@ const db = new Client(connectionString);
 async function createLink({url, comment, date=null, tags=[]}) {
 
     try {
-        console.log('Entered db createLink: ', url, 'comment:',comment, 'date:',date);
 
         const {rows: [newLink]} = await db.query(`
     INSERT INTO links("url", "comments", "share_date") VALUES ($1, $2, $3)
@@ -17,7 +16,6 @@ async function createLink({url, comment, date=null, tags=[]}) {
 
     const {id} = newLink;
 
-    console.log('From db: created new link: ', newLink);
         if(tags.length){
             const insertedTags = await createTags(tags);
             console.log('db createlink addtagstolink tags:', tags);
@@ -42,7 +40,6 @@ async function createQueryStrings(fields) {
 
 async function updateLink(linkId, fields={}) {
     try {
-        console.log('Entered db updateLink');
 
         const {setString, queryString} = await createQueryStrings(fields);
 
@@ -53,7 +50,6 @@ async function updateLink(linkId, fields={}) {
         RETURNING *;
         `, queryString)
 
-        console.log('updated link:', link);
         return link;
 
     } catch (error) {
@@ -64,7 +60,6 @@ async function updateLink(linkId, fields={}) {
 //create new tag
 async function createTags(tags) {
 
-    console.log('Entered db createTags')
 
     const tagsString = tags.map((key, index)=>{
         return `$${index+1}`}).join('),(');
@@ -78,7 +73,6 @@ async function createTags(tags) {
         RETURNING *;
         `,Object.values(tags));
 
-        console.log('inserted tags: ', insertedTags)
 
         return insertedTags;
 
@@ -89,7 +83,6 @@ async function createTags(tags) {
 
 
 async function createLinkTags(linkId, tagId) {
-    console.log('Entered db createLinkTags');
     try {
        const { rows:tags } = await db.query(`
             INSERT INTO links_tags("tags_id", "links_id")
@@ -98,7 +91,6 @@ async function createLinkTags(linkId, tagId) {
             RETURNING *;
         `, [tagId, linkId]);
 
-        console.log('inserted values:', tags);
 
     } catch (error) {
         throw error;
@@ -107,7 +99,6 @@ async function createLinkTags(linkId, tagId) {
 
 async function addTagsToLink(linkId, tags) {
 
-    console.log('Entered db addTagsToLink with tags:', tags);
 
     try {
         const tagLinkPromises= tags.map(tag=>{
@@ -126,7 +117,6 @@ async function addTagsToLink(linkId, tags) {
 }
 
 async function updateClickCount(linkId) {
-    console.log('Entered db updateClickCount');
     try {
         const { rows: link} = await db.query(`
         UPDATE links
@@ -134,7 +124,6 @@ async function updateClickCount(linkId) {
         WHERE id = $1;
         `, [linkId]);
 
-        console.log('successfully updated click count for link: ', link)
     } catch (error) {
         
     }
@@ -142,7 +131,6 @@ async function updateClickCount(linkId) {
 
 async function getLinkById(linkId) {
 
-    console.log('Entered db getLinkById with linkId:', linkId);
 
     const { rows: [links] } = await db.query(`
         SELECT * FROM links
@@ -165,14 +153,12 @@ async function getLinkById(linkId) {
 
     links.tags = tags;
 
-    console.log('returned links with tags:',links);
     return links;
 }
 
 async function getAllLinks() {
 
     try {
-        console.log('Entered db getAllLinks');
 
         const { rows: linksIds } = await db.query(`
             SELECT id FROM links
@@ -183,7 +169,6 @@ async function getAllLinks() {
             linksIds.map((link) => getLinkById(link.id))
         );
 
-        console.log('All Links:', links);
         return links;
 
     } catch (error) {
@@ -192,8 +177,6 @@ async function getAllLinks() {
 }
 
 async function deleteLink(linkId) {
-    //delete link, delete linktags
-    console.log('Entered bd deleteLink');
     try {
         const { rows: linkTags } = await db.query(`
         DELETE FROM links_tags
@@ -206,7 +189,6 @@ async function deleteLink(linkId) {
         WHERE id=${linkId}
         RETURNING *;
         `)
-        console.log('Deleted link: ', link, 'tags: ',linkTags);
 
         return link;
 
@@ -216,13 +198,11 @@ async function deleteLink(linkId) {
 }
 async function getLinkByUrl(url) {
 try{
-    console.log("entered getLINKbyURL")
     const {rows } = await db.query(`
     SELECT *
     FROM links
     WHERE url LIKE '%${url}%';
     `)
-    console.log("HERE ARE YOUR URL ROWS", rows)
     return rows;
 }catch(e){
     throw e
@@ -231,7 +211,6 @@ try{
 
 async function getLinkByTag(tag) {
 
-    console.log('Entered db getLinkByTag')
     try {
         const { rows:[link] } = await db.query(`
         SELECT * FROM links
@@ -241,7 +220,6 @@ async function getLinkByTag(tag) {
         WHERE tags.name LIKE '%${tag}%';
         `);
 
-        console.log('Successfully retrieved link: ', link);
         return link; 
 
     } catch (error) {
@@ -255,7 +233,6 @@ async function searchAllLinks(searchTerm) {
         let searchResults =[];
         const promiseArray = [getLinkByTag(searchTerm), getLinkByUrl(searchTerm)];
         const results = await Promise.all(promiseArray);
-        console.log(results);
     } catch (error) {
         throw error;
     }

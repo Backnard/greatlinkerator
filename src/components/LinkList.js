@@ -22,11 +22,6 @@ const linkList = ({
 
   useEffect(() => {
     axios.get("/api/links").then((resp) => {
-      console.log(
-        "Entered Components LinkList. Returning links:",
-        resp.data.links
-      );
-      console.log('refresh is set to:', refresh);
       setRefresh(false);
       return setResults(resp.data.links);
     });
@@ -55,7 +50,6 @@ const linkList = ({
       ASCENDING.url = true;
     }
 
-    console.log('results sorted by url: ', newArray);
     setResults(newArray);
   };
 
@@ -74,7 +68,6 @@ const linkList = ({
       ASCENDING.clicks = true;
     }
 
-    console.log('results sorted by clicks: ', newArray);
     setResults(newArray);
   };
 
@@ -114,7 +107,6 @@ const linkList = ({
       ASCENDING.id = true;
     }
 
-    console.log('results sorted by ranking: ', newArray);
     setResults(newArray);
   };
 
@@ -141,7 +133,6 @@ const linkList = ({
       ASCENDING.comments = true;
     }
 
-    console.log('results sorted by comments: ', newArray);
     setResults(newArray);
   };
 
@@ -169,7 +160,6 @@ const linkList = ({
       ASCENDING.tags = true;
     }
 
-    console.log('results sorted by tags: ', newArray);
     setResults(newArray);
   };
 

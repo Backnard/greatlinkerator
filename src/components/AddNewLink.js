@@ -33,11 +33,10 @@ const handleTags = (e) => {
   
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(formData);
-    // ... submit to API or something
+
     axios.post('/api/links', formData)
         .then((res)=>{
-            console.log('new tag created:', res.data.data);
+            setFormData({})
             setRefresh(true);
 
         })
@@ -51,7 +50,7 @@ const handleTags = (e) => {
     <Form.Group widths='equal'>
       <Form.Input fluid label='URL' placeholder='www.YOUR_URL.com'
       name='url'
-      value = {url}
+    //   value = {url}
       onChange={handleURL} />
       <Form.Input fluid label='Comments' placeholder='I love this site...' 
       name='comment'

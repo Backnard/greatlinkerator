@@ -3,18 +3,14 @@ import axios from "axios";
 import { Header, Table, Rating, Button, Tab, Icon } from "semantic-ui-react";
 
 const EditRow = ({result, setMode, editMode}) => {
-  const [input, setInput] = useState({url:'', comments:'', tags:[]});
+  const [input, setInput] = useState({});
   const { id, url, clicks, comments, tags, rating } = result;
-  console.log("Entered Table Rows", result);
   const urlString = `http://${url}`;
   const tagsString = tags.map((tag) => tag.name).join(", ");
-  console.log(tagsString);
 
   const handleRate = async (event, data) => {
     const id = data.rating_id;
-    console.log("From rating:", data.rating, "rating id:", id);
     axios.patch(`/api/links/${id}`, { rating: data.rating }).then((res) => {
-      console.log("Updated links: ", res.data.data);
       return res.data.data;
     });
   };
@@ -23,7 +19,6 @@ const EditRow = ({result, setMode, editMode}) => {
     const { name, clicks, id } = data;
     console.log("Clicked edit. : ", name, clicks);
     axios.patch(`/api/links/${id}`, { clicks: 252 }).then((res) => {
-      console.log("Updated click count: ", res.data.data.clicks);
       return res.data.data.clicks;
     });
 
@@ -31,20 +26,28 @@ const EditRow = ({result, setMode, editMode}) => {
   };
 
   const handleInput = (event) => {
-    console.log(event.target);
-    const name = event.target.name
+
+    const{name, value} = event.target;
+
+    setInput({...input, [name]: value});
   }
 
   const handleEdit = (event) => {
     const id = event.target.id
     setMode({mode: false, rowId: id})
-    console.log("mode is: ", editMode);
+    console.log('input: ', input);
+
+    axios.patch(`/api/links/${id}`, input)
+      .then((res)=>{
+        console.log('tag updated: ', res.data.data)
+      })
   }
 
   return (
     <Table.Row key={id}>
       <Table.Cell>
         <Button 
+        id = {id}
         onClick={handleEdit}/>
       </Table.Cell>
       <Table.Cell>
@@ -57,12 +60,9 @@ const EditRow = ({result, setMode, editMode}) => {
         </input>
       </Table.Cell>
       <Table.Cell>
-        <Header>{clicks}</Header>
-        <Header.Subheader>
-          <Button onClick={handleUpdate} data={clicks} name={"clicks"} id={id}>
-            <Icon name="shop"></Icon>
-          </Button>
-        </Header.Subheader>
+        <Header>
+          {clicks}
+        </Header>
       </Table.Cell>
       <Table.Cell>
         <Rating
@@ -77,8 +77,17 @@ const EditRow = ({result, setMode, editMode}) => {
         80% <br />
         <a href="#">18 studies</a>
       </Table.Cell>
-      <Table.Cell>{comments}</Table.Cell>
-      <Table.Cell>{tagsString}</Table.Cell>
+      <Table.Cell>
+      <input
+          name={"comments"}
+          id={id}
+          placeholder={comments}
+          onInput={handleInput}
+        >
+        </input></Table.Cell>
+      <Table.Cell>
+      {tagsString}
+      </Table.Cell>
     </Table.Row>
   );
 };

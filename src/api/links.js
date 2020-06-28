@@ -14,9 +14,7 @@ linkRouter.use(bodyparser.json());
 ///Router for GET LINKS(by P.V.)
 linkRouter.get("/", async (req, res, next) => {
 
-    console.log('Entered /links GET')
   const links = await getAllLinks();
-    console.log('successfully retrieved all links: ', links);
   res.send({
     links,
     status:true,
@@ -27,7 +25,6 @@ linkRouter.get("/", async (req, res, next) => {
 // POST /api/links (creates tags during link creation)
 linkRouter.post("/", async (req, res, next) => {
     const {url, comment, date, tags=[]} = req.body;
-    console.log('Entered /links POST. req.body: ', req.body);
 
     try {
         //creates tags during link creation???
@@ -38,7 +35,6 @@ linkRouter.post("/", async (req, res, next) => {
             tags
         })
 
-        console.log('New link created: ', link);
         res.send({
             message: 'new link created',
             data: link,
@@ -51,18 +47,21 @@ linkRouter.post("/", async (req, res, next) => {
 
 linkRouter.patch('/:id', async (req, res, next) => {
     const {id} = req.params;
-    const {comments, tags, clicks, rating} = req.body;
+    const {url, comments, clicks, rating} = req.body;
     const updateFields = {};
 
     console.log('Entered /links/:id PATCH. id: ', id, 'req.body: ', req.body);
 
+    if (url){
+        updateFields.url = url;
+    }
     if (comments) {
-        updateFields.comment = comments;
+        updateFields.comments = comments;
     }
     
-    if (tags) {
-        updateFields.tags = tags;
-    }
+    // if (tags) {
+    //     updateFields.tags = tags;
+    // }
     
     if(clicks){
         updateFields.clicks = clicks;
