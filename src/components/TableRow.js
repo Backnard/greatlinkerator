@@ -32,6 +32,7 @@ const TableRow = ({result, setMode, editMode}) => {
     <Table.Row key={id}>
       <Table.Cell>
         <Button 
+        icon="edit"
         id={id}
         onClick={handleEdit}/>
       </Table.Cell>

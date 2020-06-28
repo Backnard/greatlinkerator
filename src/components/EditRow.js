@@ -31,8 +31,9 @@ const EditRow = ({ result, setMode, editMode }) => {
     setInput({ ...input, [name]: value });
   };
 
-  const handleEdit = (event) => {
-    const id = event.target.id;
+  const handleEdit = (event, data) => {
+    const id = data.id;
+    console.log('ID:', id);
     setMode({ mode: false, rowId: id });
     console.log("input: ", input);
 
@@ -54,7 +55,10 @@ const EditRow = ({ result, setMode, editMode }) => {
   return (
     <Table.Row key={id}>
       <Table.Cell>
-        <Button id={id} onClick={handleEdit} />
+        <Button 
+        id={id} 
+        icon={"check square outline"}
+        onClick={handleEdit} />
       </Table.Cell>
       <Table.Cell>
         <input

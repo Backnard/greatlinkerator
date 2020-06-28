@@ -41,11 +41,7 @@ const searchBar = ({ results, setResults, setRefresh }) => {
   }
 
  return (
-
-<Segment placeholder>
-  <Grid columns={1} stackable textAlign='center'>
-    <Grid.Row verticalAlign='middle'>
-      <Grid.Column>
+      <>
         <Header icon>
           <Icon name='search' />
           Find Links
@@ -54,10 +50,7 @@ const searchBar = ({ results, setResults, setRefresh }) => {
         <Search 
           placeholder='Search links...'
           onSearchChange={ handleLinkChange } />
-      </Grid.Column>
-      </Grid.Row>
-      </Grid>
-</Segment>
+      </>
  );
 }
 

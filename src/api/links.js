@@ -87,11 +87,9 @@ linkRouter.patch('/:id', async (req, res, next) => {
 })
 
 linkRouter.get('/:id', async(req, res, next)=>{
-    console.log('Entered links GET route /:id');
     const {id}= req.params;
 
     try {
-        console.log('searching by id: ', id)
         const link = await updateClickCount(id);
         res.send({
             message:'successfully retrieved link',

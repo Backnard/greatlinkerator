@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { List } from "semantic-ui-react";
+import { List, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { render } from "react-dom";
@@ -162,14 +162,16 @@ const SortTable = ({
   };
 
   return (
-    <div>
-      <button onClick={sortByUrl}>Sort by url</button>
-      <button onClick={sortByClicks}>Sort by Clicks</button>
-      <button onClick={sortByRating}>Sort by Rating</button>
-      <button onClick={sortByRanking}>Sort by Ranking</button>
-      <button onClick={sortByComments}>Sort by Comments</button>
-      <button onClick={sortByTags}>Sort by Tags</button>
-    </div>
+    <>
+      <Button.Group>
+      <Button onClick={sortByUrl}>Sort by url/></Button>
+      <Button onClick={sortByClicks}>Sort by Clicks</Button>
+      <Button onClick={sortByRating}>Sort by Rating</Button>
+      <Button onClick={sortByRanking}>Sort by Ranking</Button>
+      <Button onClick={sortByComments}>Sort by Comments</Button>
+      <Button onClick={sortByTags}>Sort by Tags</Button>
+      </Button.Group>
+    </>
   );
 };
 
