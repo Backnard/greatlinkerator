@@ -51,6 +51,18 @@ async function updateLink(linkId, fields = {}) {
   try {
     if (tags && tags.length) {
       console.log("attempting to update tags: ", tags);
+      const { rows: linkTags } = await db.query(`
+      DELETE FROM links_tags
+      WHERE links_id = ${linkId}
+      RETURNING tags_id;
+      `);
+
+      const deletedTags = linkTags.map(({tags_id:tagId})=>{
+        return deleteTag(tagId);
+      })
+
+      await Promise.all(deletedTags);
+
       const insertedTags = await createTags(tags);
       console.log("Successfully updated tags:", insertedTags);
       await addTagsToLink(linkId, insertedTags);
@@ -73,6 +85,19 @@ async function updateLink(linkId, fields = {}) {
     return link;
   } catch (error) {
     throw error;
+  }
+}
+
+async function deleteTag(tagId) {
+  try {
+    console.log('tag ID: ', tagId);
+    const { rows: deletedTag } = await db.query(`
+    DELETE FROM tags
+    WHERE id = ${tagId}
+    RETURNING *;
+    `);
+  } catch (error) {
+    throw error
   }
 }
 

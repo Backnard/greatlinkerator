@@ -74,7 +74,6 @@ const EditRow = ({ result, setMode, setRefresh }) => {
         <input
           name={"url"}
           id={id}
-          // placeholder={url}
           onInput={handleInput}
           defaultValue={url}
         ></input>
@@ -99,7 +98,6 @@ const EditRow = ({ result, setMode, setRefresh }) => {
         <input
           name={"comments"}
           id={id}
-          // placeholder={comments}
           defaultValue={comments}
           onInput={handleInput}
         ></input>
@@ -108,8 +106,8 @@ const EditRow = ({ result, setMode, setRefresh }) => {
       <input
           name={"tags"}
           id={id}
-          placeholder={tagsString}
-          // defaultValue={tagsString}
+          // placeholder={tagsString}
+          defaultValue={tagsString}
           onInput={handleTags}
         ></input>
         </Table.Cell>
