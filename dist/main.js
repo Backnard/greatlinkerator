@@ -84155,9 +84155,18 @@ const EditRow = ({
       mode: false,
       rowId: id
     });
-    console.log('input: ', input);
+    console.log("input: ", input);
     axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, input).then(res => {
-      console.log('tag updated: ', res.data.data);
+      console.log("tag updated: ", res.data.data);
+    });
+  };
+
+  const handleTags = e => {
+    const newTagsString = e.target.value;
+    const tagsArray = newTagsString.split(",");
+    console.log('tagsArray: ', tagsArray);
+    setInput({ ...input,
+      tags: tagsArray
     });
   };
 
@@ -84168,9 +84177,10 @@ const EditRow = ({
     onClick: handleEdit
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "url",
-    id: id,
-    placeholder: url,
-    onInput: handleInput
+    id: id // placeholder={url}
+    ,
+    onInput: handleInput,
+    defaultValue: url
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], null, clicks)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Rating"], {
     icon: "star",
     defaultRating: rating,
@@ -84183,10 +84193,17 @@ const EditRow = ({
     href: "#"
   }, "18 studies")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "comments",
-    id: id,
-    placeholder: comments,
+    id: id // placeholder={comments}
+    ,
+    defaultValue: comments,
     onInput: handleInput
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, tagsString));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    name: "tags",
+    id: id,
+    placeholder: tagsString // defaultValue={tagsString}
+    ,
+    onInput: handleTags
+  })));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (EditRow);

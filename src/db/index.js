@@ -1,218 +1,235 @@
-const  { Client }= require('pg');
-const chalk = require('chalk');
+const { Client } = require("pg");
+const chalk = require("chalk");
 
-const connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkerator';
+const connectionString =
+  process.env.DATABASE_URL || "postgres://localhost:5432/linkerator";
 const db = new Client(connectionString);
 
 //create link
-async function createLink({url, comment, date=null, tags=[]}) {
-
-    try {
-
-        const {rows: [newLink]} = await db.query(`
-    INSERT INTO links("url", "comments", "share_date") VALUES ($1, $2, $3)
+async function createLink({ url, comment, date = null, tags = [] }) {
+  try {
+    const {
+      rows: [newLink],
+    } = await db.query(
+      `
+    INSERT INTO links("url", "comments", "share_date")
+    VALUES ($1, $2, $3)
     RETURNING *;
-    `, [url, comment, date]);
+    `,
+      [url, comment, date]
+    );
 
-    const {id} = newLink;
+    const { id } = newLink;
 
-        if(tags.length){
-            const insertedTags = await createTags(tags);
-            console.log('db createlink addtagstolink tags:', tags);
-            await addTagsToLink(id, insertedTags);
-        }
-        return newLink;
-    } catch (error) {
-        throw error;
+    if (tags.length) {
+      const insertedTags = await createTags(tags);
+      console.log("db createlink addtagstolink tags:", tags);
+      await addTagsToLink(id, insertedTags);
     }
-    
+    return newLink;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function createQueryStrings(fields) {
+  const setString = Object.keys(fields)
+    .map((key, index) => {
+      return `"${key}"=$${index + 1}`;
+    })
+    .join(",");
 
-    const setString = Object.keys(fields).map((key, index)=>{
-        return `"${key}"=$${index+1}`}).join(',');
-    
-    const queryString = Object.values(fields);
+  const queryString = Object.values(fields);
 
-    return { setString, queryString  };
+  return { setString, queryString };
 }
 
-async function updateLink(linkId, fields={}) {
-    try {
+async function updateLink(linkId, fields = {}) {
+  const { tags } = fields;
+  delete fields.tags;
 
-        const {setString, queryString} = await createQueryStrings(fields);
+  try {
+    if (tags && tags.length) {
+      console.log("attempting to update tags: ", tags);
+      const insertedTags = await createTags(tags);
+      console.log("Successfully updated tags:", insertedTags);
+      await addTagsToLink(linkId, insertedTags);
+    }
 
-        const { rows:[link] } = await db.query(`
+    const { setString, queryString } = await createQueryStrings(fields);
+
+    const {
+      rows: [link],
+    } = await db.query(
+      `
         UPDATE links
         SET ${setString}
         WHERE id = ${linkId}
         RETURNING *;
-        `, queryString)
+        `,
+      queryString
+    );
 
-        return link;
-
-    } catch (error) {
-        throw error;
-    }
+    return link;
+  } catch (error) {
+    throw error;
+  }
 }
 
 //create new tag
 async function createTags(tags) {
+  const tagsString = tags
+    .map((key, index) => {
+      return `$${index + 1}`;
+    })
+    .join("),(");
 
-
-    const tagsString = tags.map((key, index)=>{
-        return `$${index+1}`}).join('),(');
-   
-
-    try {
-        //NOTE: RETURNS AN ARRAY OF OBJECTS!
-        const { rows:insertedTags } = await db.query(`
+  try {
+    //NOTE: RETURNS AN ARRAY OF OBJECTS!
+    const { rows: insertedTags } = await db.query(
+      `
         INSERT INTO tags(name)
         VALUES (${tagsString})
         RETURNING *;
-        `,Object.values(tags));
+        `,
+      Object.values(tags)
+    );
 
-
-        return insertedTags;
-
-    } catch (error) {
-        throw error;
-    }
+    return insertedTags;
+  } catch (error) {
+    throw error;
+  }
 }
 
-
 async function createLinkTags(linkId, tagId) {
-    try {
-       const { rows:tags } = await db.query(`
-            INSERT INTO links_tags("tags_id", "links_id")
-            VALUES($1, $2)
-            ON CONFLICT(tags_id, links_id) DO NOTHING
-            RETURNING *;
-        `, [tagId, linkId]);
-
-
-    } catch (error) {
-        throw error;
-    }
+  try {
+    const { rows: tags } = await db.query(
+      `
+        INSERT INTO links_tags("tags_id", "links_id")
+        VALUES($1, $2)
+        ON CONFLICT(tags_id, links_id) DO NOTHING
+        RETURNING *;
+        `,
+      [tagId, linkId]
+    );
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function addTagsToLink(linkId, tags) {
+  try {
+    const tagLinkPromises = tags.map((tag) => {
+      return createLinkTags(linkId, tag.id);
+    });
 
+    await Promise.all(tagLinkPromises);
 
-    try {
-        const tagLinkPromises= tags.map(tag=>{
-            return createLinkTags(linkId, tag.id);
-        })
-        
-        await Promise.all(tagLinkPromises);
-
-        return await getLinkById(linkId);
-
-
-    } catch (error) {
-        
-    }
-    
+    return await getLinkById(linkId);
+  } catch (error) {}
 }
 
 async function updateClickCount(linkId) {
-    try {
-        const { rows: link} = await db.query(`
+  try {
+    const { rows: link } = await db.query(
+      `
         UPDATE links
         SET clicks = clicks + 1
         WHERE id = $1;
-        `, [linkId]);
-
-    } catch (error) {
-        
-    }
+        `,
+      [linkId]
+    );
+  } catch (error) {}
 }
 
 async function getLinkById(linkId) {
-
-
-    const { rows: [links] } = await db.query(`
+  const {
+    rows: [links],
+  } = await db.query(
+    `
         SELECT * FROM links
         WHERE id=$1;
-    `,[linkId]);
+    `,
+    [linkId]
+  );
 
+  if (!links) {
+    throw {
+      message: "No links with that id",
+      error: "NoLinkIdError",
+    };
+  }
 
-    if(!links){
-        throw({
-            message: 'No links with that id',
-            error:'NoLinkIdError'
-        })
-    }
+  const { rows: tags } = await db.query(
+    `
+    SELECT tags.* FROM tags
+    JOIN links_tags ON tags.id = links_tags.tags_id
+    WHERE links_tags.links_id = $1;
+    `,
+    [linkId]
+  );
 
-    const { rows: tags } = await db.query(`
-        SELECT tags.* FROM tags
-        JOIN links_tags ON tags.id = links_tags.tags_id
-        WHERE links_tags.links_id = $1;
-    `, [linkId]);
+  links.tags = tags;
 
-    links.tags = tags;
-
-    return links;
+  return links;
 }
 
 async function getAllLinks() {
-
-    try {
-
-        const { rows: linksIds } = await db.query(`
+  try {
+    const { rows: linksIds } = await db.query(`
             SELECT id FROM links
             ORDER BY url ASC;
-
         `);
-        const links = await Promise.all(
-            linksIds.map((link) => getLinkById(link.id))
-        );
+    const links = await Promise.all(
+      linksIds.map((link) => getLinkById(link.id))
+    );
 
-        return links;
-
-    } catch (error) {
-        throw error;
-    }
+    return links;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function deleteLink(linkId) {
-    try {
-        const { rows: linkTags } = await db.query(`
+  try {
+    const { rows: linkTags } = await db.query(`
         DELETE FROM links_tags
         WHERE links_id = ${linkId}
         RETURNING *;
-        `)
-    
-        const { rows: [link] } = await db.query(`
+        `);
+
+    const {
+      rows: [link],
+    } = await db.query(`
         DELETE FROM links
         WHERE id=${linkId}
         RETURNING *;
-        `)
+        `);
 
-        return link;
-
-    } catch (error) {
-        throw error;
-    }
+    return link;
+  } catch (error) {
+    throw error;
+  }
 }
 async function getLinkByUrl(url) {
-try{
-    const {rows } = await db.query(`
+  try {
+    const { rows } = await db.query(`
     SELECT *
     FROM links
     WHERE url LIKE '%${url}%';
-    `)
+    `);
+
     return rows;
-}catch(e){
-    throw e
+  } catch (e) {
+    throw e;
+  }
 }
-};
 
 async function getLinkByTag(tag) {
-
-    try {
-        const { rows:[link] } = await db.query(`
+  try {
+    const {
+      rows: [link],
+    } = await db.query(`
         SELECT * FROM links
         JOIN links_tags
         ON links.id = links_tags.links_id
@@ -220,39 +237,34 @@ async function getLinkByTag(tag) {
         WHERE tags.name LIKE '%${tag}%';
         `);
 
-        return link; 
-
-    } catch (error) {
-        throw error;
-    }
+    return link;
+  } catch (error) {
+    throw error;
+  }
 }
 
 async function searchAllLinks(searchTerm) {
-
-    try {
-        let searchResults =[];
-        const promiseArray = [getLinkByTag(searchTerm), getLinkByUrl(searchTerm)];
-        const results = await Promise.all(promiseArray);
-    } catch (error) {
-        throw error;
-    }
-
+  try {
+    let searchResults = [];
+    const promiseArray = [getLinkByTag(searchTerm), getLinkByUrl(searchTerm)];
+    const results = await Promise.all(promiseArray);
+  } catch (error) {
+    throw error;
+  }
 }
 
-
-
-module.exports= { 
-    db, 
-    createLink, 
-    updateLink,
-    createTags,
-    createLinkTags,
-    addTagsToLink,
-    getAllLinks,
-    deleteLink,
-    getLinkByUrl,
-    getLinkByTag, 
-    searchAllLinks, 
-    getLinkById,
-    updateClickCount
- }; 
+module.exports = {
+  db,
+  createLink,
+  updateLink,
+  createTags,
+  createLinkTags,
+  addTagsToLink,
+  getAllLinks,
+  deleteLink,
+  getLinkByUrl,
+  getLinkByTag,
+  searchAllLinks,
+  getLinkById,
+  updateClickCount,
+};

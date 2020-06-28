@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { Header, Table, Rating, Button, Tab, Icon } from "semantic-ui-react";
 
-const EditRow = ({result, setMode, editMode}) => {
+const EditRow = ({ result, setMode, editMode }) => {
   const [input, setInput] = useState({});
   const { id, url, clicks, comments, tags, rating } = result;
   const urlString = `http://${url}`;
@@ -26,43 +26,47 @@ const EditRow = ({result, setMode, editMode}) => {
   };
 
   const handleInput = (event) => {
+    const { name, value } = event.target;
 
-    const{name, value} = event.target;
-
-    setInput({...input, [name]: value});
-  }
+    setInput({ ...input, [name]: value });
+  };
 
   const handleEdit = (event) => {
-    const id = event.target.id
-    setMode({mode: false, rowId: id})
-    console.log('input: ', input);
+    const id = event.target.id;
+    setMode({ mode: false, rowId: id });
+    console.log("input: ", input);
 
-    axios.patch(`/api/links/${id}`, input)
-      .then((res)=>{
-        console.log('tag updated: ', res.data.data)
-      })
-  }
+    axios.patch(`/api/links/${id}`, input).then((res) => {
+      console.log("tag updated: ", res.data.data);
+    });
+  };
+
+  const handleTags = (e) => {
+    const newTagsString = e.target.value;
+    const tagsArray = newTagsString.split(",");
+    console.log('tagsArray: ', tagsArray);
+    setInput({
+      ...input,
+      tags: tagsArray,
+    });
+  };
 
   return (
     <Table.Row key={id}>
       <Table.Cell>
-        <Button 
-        id = {id}
-        onClick={handleEdit}/>
+        <Button id={id} onClick={handleEdit} />
       </Table.Cell>
       <Table.Cell>
         <input
           name={"url"}
           id={id}
-          placeholder={url}
+          // placeholder={url}
           onInput={handleInput}
-        >
-        </input>
+          defaultValue={url}
+        ></input>
       </Table.Cell>
       <Table.Cell>
-        <Header>
-          {clicks}
-        </Header>
+        <Header>{clicks}</Header>
       </Table.Cell>
       <Table.Cell>
         <Rating
@@ -78,16 +82,23 @@ const EditRow = ({result, setMode, editMode}) => {
         <a href="#">18 studies</a>
       </Table.Cell>
       <Table.Cell>
-      <input
+        <input
           name={"comments"}
           id={id}
-          placeholder={comments}
+          // placeholder={comments}
+          defaultValue={comments}
           onInput={handleInput}
-        >
-        </input></Table.Cell>
-      <Table.Cell>
-      {tagsString}
+        ></input>
       </Table.Cell>
+      <Table.Cell>
+      <input
+          name={"tags"}
+          id={id}
+          placeholder={tagsString}
+          // defaultValue={tagsString}
+          onInput={handleTags}
+        ></input>
+        </Table.Cell>
     </Table.Row>
   );
 };

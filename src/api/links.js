@@ -47,7 +47,7 @@ linkRouter.post("/", async (req, res, next) => {
 
 linkRouter.patch('/:id', async (req, res, next) => {
     const {id} = req.params;
-    const {url, comments, clicks, rating} = req.body;
+    const {url, comments, clicks, rating, tags=[]} = req.body;
     const updateFields = {};
 
     console.log('Entered /links/:id PATCH. id: ', id, 'req.body: ', req.body);
@@ -59,9 +59,9 @@ linkRouter.patch('/:id', async (req, res, next) => {
         updateFields.comments = comments;
     }
     
-    // if (tags) {
-    //     updateFields.tags = tags;
-    // }
+    if (tags && tags.length) {
+        updateFields.tags = tags;
+    }
     
     if(clicks){
         updateFields.clicks = clicks;
