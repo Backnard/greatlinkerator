@@ -84195,8 +84195,12 @@ const EditRow = ({
     });
   };
 
-  const handleDelete = id => {
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`/api/links/${id}`).then(response => console.log(response.data));
+  const handleDelete = (event, data) => {
+    const id = data.id;
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`/api/links/${id}`).then(response => {
+      console.log(response.data.data);
+      setRefresh(true);
+    });
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Row, {
@@ -84622,9 +84626,6 @@ const TableRow = ({
     icon: "edit",
     id: id,
     onClick: handleEdit
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-    icon: "delete",
-    id: id
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], {
     as: "a",
     href: urlString,

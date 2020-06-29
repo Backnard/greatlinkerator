@@ -214,6 +214,8 @@ async function getAllLinks() {
 }
 
 async function deleteLink(linkId) {
+
+  console.log('Entered db DELETE LINKS with id: ', linkId);
   try {
     const { rows: linkTags } = await db.query(`
         DELETE FROM links_tags

@@ -67,9 +67,14 @@ const EditRow = ({ result, setMode, setRefresh }) => {
       tags: tagsArray,
     });
   }
-   const handleDelete = (id)=> {
-    axios.delete(`/api/links/${id}`)
-.then((response) => console.log(response.data))
+   const handleDelete = (event, data)=> {
+     const id=data.id
+
+      axios.delete(`/api/links/${id}`)
+      .then((response) => {
+        console.log(response.data.data);
+        setRefresh(true);
+      })
    
 
 
