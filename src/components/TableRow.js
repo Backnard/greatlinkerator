@@ -27,6 +27,9 @@ const TableRow = ({result, setMode, setRefresh}) => {
         icon="edit"
         id={id}
         onClick={handleEdit}/>
+        <Button
+        icon="delete"
+        id={id}/>
       </Table.Cell>
       <Table.Cell>
         <Header
