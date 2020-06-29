@@ -84258,14 +84258,14 @@ const searchBar = ({
   function searchMatches(result, compare) {
     console.log('searchMatches, results: ', results, 'compare: ', compare);
     const {
-      id,
+      clicks,
       url,
       comments,
       tags
     } = result;
     const tagsString = tags.map(tag => tag.name).join(', ');
-    const newId = id.toString();
-    const filterOn = [newId, url, comments, tagsString];
+    const newClicks = clicks.toString();
+    const filterOn = [newClicks, url, comments, tagsString];
     return filterOn.some(string => {
       return string.toLowerCase().includes(compare);
     });
