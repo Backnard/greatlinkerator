@@ -68,10 +68,12 @@ const EditRow = ({ result, setMode, setRefresh }) => {
     });
   }
    const handleDelete = (id)=> {
-    axios.get(`/api/links/${id}`)
+    axios.delete(`/api/links/${id}`)
 .then((response) => console.log(response.data))
+   
 
-   }
+
+}
   
   
   return (
