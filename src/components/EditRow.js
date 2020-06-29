@@ -55,6 +55,8 @@ const EditRow = ({ result, setMode, setRefresh }) => {
  
   };
 
+
+
   const handleTags = (e) => {
     const newTagsString = e.target.value;
     const id = e.target.id;
@@ -64,9 +66,16 @@ const EditRow = ({ result, setMode, setRefresh }) => {
       ...input,
       tags: tagsArray,
     });
+  }
+   const handleDelete = (id)=> {
+    axios.delete(`/api/links/${id}`)
+.then((response) => console.log(response.data))
+   
 
-  };
 
+}
+  
+  
   return (
     <Table.Row key={id}>
       <Table.Cell>
@@ -74,6 +83,10 @@ const EditRow = ({ result, setMode, setRefresh }) => {
         id={id} 
         icon={"check square outline"}
         onClick={handleEdit} />
+        <Button
+        id={id} 
+        icon={"delete"}
+        onClick={handleDelete}/>
       </Table.Cell>
       <Table.Cell>
         <input

@@ -84195,12 +84195,20 @@ const EditRow = ({
     });
   };
 
+  const handleDelete = id => {
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`/api/links/${id}`).then(response => console.log(response.data));
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Row, {
     key: id
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
     id: id,
     icon: "check square outline",
     onClick: handleEdit
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    id: id,
+    icon: "delete",
+    onClick: handleDelete
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
     name: "url",
     id: id,
@@ -84258,14 +84266,14 @@ const searchBar = ({
   function searchMatches(result, compare) {
     console.log('searchMatches, results: ', results, 'compare: ', compare);
     const {
-      id,
+      clicks,
       url,
       comments,
       tags
     } = result;
     const tagsString = tags.map(tag => tag.name).join(', ');
-    const newId = id.toString();
-    const filterOn = [newId, url, comments, tagsString];
+    const newClicks = clicks.toString();
+    const filterOn = [newClicks, url, comments, tagsString];
     return filterOn.some(string => {
       return string.toLowerCase().includes(compare);
     });
@@ -84614,6 +84622,9 @@ const TableRow = ({
     icon: "edit",
     id: id,
     onClick: handleEdit
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    icon: "delete",
+    id: id
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], {
     as: "a",
     href: urlString,

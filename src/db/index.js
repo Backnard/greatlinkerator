@@ -48,80 +48,77 @@ async function updateLink(linkId, fields = {}) {
   const { tags } = fields;
   delete fields.tags;
 
+  const { setString, queryString } = await createQueryStrings(fields);
+
+
   try {
-    if (tags && tags.length) {
-      console.log("attempting to update tags: ", tags);
-      const { rows: linkTags } = await db.query(`
-      DELETE FROM links_tags
-      WHERE links_id = ${linkId}
-      RETURNING tags_id;
-      `);
-
-      // const deletedTags = linkTags.map(({tags_id:tagId})=>{
-      //   return deleteTag(tagId);
-      // })
-
-      // await Promise.all(deletedTags);
-
-      const insertedTags = await createTags(tags);
-      console.log("Successfully updated tags:", insertedTags);
-      await addTagsToLink(linkId, insertedTags);
+    if (setString.length > 0) {
+      await db.query(
+        `
+          UPDATE links
+          SET ${setString}
+          WHERE id = ${linkId}
+          RETURNING *;
+          `,
+        queryString
+      );
     }
 
-    const { setString, queryString } = await createQueryStrings(fields);
+    if (tags === undefined) {
+      return await getLinkById(linkId);
+    }
 
-    const {
-      rows: [link],
-    } = await db.query(
-      `
-        UPDATE links
-        SET ${setString}
-        WHERE id = ${linkId}
-        RETURNING *;
-        `,
-      queryString
-    );
+      console.log("attempting to update tags: ", tags);
 
-    return link;
+      const tagList = await createTags(tags);
+      const tagListIdString = tagList.map((tag) => `${tag.id}`).join(", ");
+      console.log("Successfully updated tags:", tagList, 'tag ID string', tagListIdString);
+
+
+      await db.query(`
+      DELETE FROM links_tags
+      WHERE tags_id
+      NOT IN (${tagListIdString})
+      AND "links_id"=$1;
+      `, [linkId]);
+
+      await addTagsToLink(linkId, tagList);
+
+      return await getLinkById(linkId);
   } catch (error) {
     throw error;
   }
 }
 
-async function deleteTag(tagId) {
-  try {
-    console.log('tag ID: ', tagId);
-    const { rows: deletedTag } = await db.query(`
-    DELETE FROM tags
-    WHERE id = ${tagId}
-    RETURNING *;
-    `);
-  } catch (error) {
-    throw error
+async function createTags(tagList) {
+  if (tagList.length === 0) {
+    return;
   }
-}
 
-//create new tag
-async function createTags(tags) {
-  const tagsString = tags
-    .map((key, index) => {
-      return `$${index + 1}`;
-    })
-    .join("),(");
+  const insertValues = tagList.map((_, index) => `$${index + 1}`).join("), (");
+
+  const selectValues = tagList.map((_, index) => `$${index + 1}`).join(", ");
 
   try {
-    //NOTE: RETURNS AN ARRAY OF OBJECTS!
-    const { rows: insertedTags } = await db.query(
+    await db.query(
       `
-        INSERT INTO tags(name)
-        VALUES (${tagsString})
-        ON CONFLICT(name) DO NOTHING
-        RETURNING *;
-        `,
-      Object.values(tags)
+      INSERT INTO tags(name)
+      VALUES (${insertValues})
+      ON CONFLICT (name) DO NOTHING;
+    `,
+      tagList
     );
 
-    return insertedTags;
+    const { rows } = await db.query(
+      `
+      SELECT * FROM tags
+      WHERE name
+      IN (${selectValues});
+    `,
+      tagList
+    );
+
+    return rows;
   } catch (error) {
     throw error;
   }
