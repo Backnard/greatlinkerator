@@ -8,7 +8,7 @@ db.connect();
 
 
 
-const { PORT = 3001} = process.env.PORT;
+const { PORT = 3001} = process.env;
 
 const server = express();
 server.use(BodyParser.json());
