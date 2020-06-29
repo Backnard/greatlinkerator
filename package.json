@@ -10,7 +10,6 @@
     "server:dev": "node-dev --respawn ./index.js",
     "build": "webpack --mode=\"production\"",
     "start": "node  ./index.js"
-
   },
   "keywords": [],
   "author": "",
