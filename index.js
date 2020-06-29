@@ -6,7 +6,7 @@ db.connect();
 
 const dotenv = require('dotenv').config();
 
-const { PORT = 3001} = process.config.PORT;//process.env.PORT??
+const { PORT = 3001} = process.config.PORT;
 
 const server = express();
 server.use(BodyParser.json());
