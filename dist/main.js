@@ -84135,22 +84135,6 @@ const EditRow = ({
     });
   };
 
-  const handleUpdate = async (event, data) => {
-    const {
-      name,
-      clicks,
-      id
-    } = data;
-    console.log("Clicked edit. : ", name, clicks);
-    axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, {
-      clicks: 252
-    }).then(res => {
-      setRefresh(true);
-      return res.data.data.clicks;
-    });
-    console.log("Clicked edit button. data: ", data.data);
-  };
-
   const handleInput = event => {
     const {
       name,
@@ -84171,7 +84155,7 @@ const EditRow = ({
 
     try {
       if (!input || input == {}) {
-        console.log('Input length is empty: ', input);
+        console.log("Input length is empty: ", input);
         return;
       }
 
@@ -84185,11 +84169,11 @@ const EditRow = ({
     }
   };
 
-  const handleTags = e => {
+  const handleTags = (e, data) => {
     const newTagsString = e.target.value;
     const id = e.target.id;
     const tagsArray = newTagsString.split(",");
-    console.log('tagsArray: ', tagsArray, 'id:', id);
+    console.log("tagsArray: ", tagsArray, "id:", id);
     setInput({ ...input,
       tags: tagsArray
     });
@@ -84198,10 +84182,16 @@ const EditRow = ({
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Row, {
     key: id
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-    id: id,
-    icon: "check square outline",
-    onClick: handleEdit
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+    animated: true,
+    onClick: handleEdit,
+    id: id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"].Content, {
+    hidden: true
+  }, "Submit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"].Content, {
+    visible: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Icon"], {
+    name: "check square outline"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Input"], {
     name: "url",
     id: id,
     onInput: handleInput,
@@ -84212,12 +84202,12 @@ const EditRow = ({
     maxRating: 3,
     rating_id: id,
     onRate: handleRate
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Input"], {
     name: "comments",
     id: id,
     defaultValue: comments,
     onInput: handleInput
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Input"], {
     name: "tags",
     id: id // placeholder={tagsString}
     ,
@@ -84600,8 +84590,8 @@ const TableRow = ({
     });
   };
 
-  const handleEdit = event => {
-    const id = event.target.id;
+  const handleEdit = (event, data) => {
+    const id = data.id;
     setMode({
       mode: true,
       rowId: id
@@ -84611,10 +84601,17 @@ const TableRow = ({
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Row, {
     key: id
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-    icon: "edit",
+    animated: "vertical",
+    onClick: handleEdit,
+    id: id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"].Content, {
+    hidden: true
+  }, "Edit"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"].Content, {
     id: id,
-    onClick: handleEdit
-  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], {
+    visible: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Icon"], {
+    name: "edit"
+  })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Header"], {
     as: "a",
     href: urlString,
     target: "_blank",

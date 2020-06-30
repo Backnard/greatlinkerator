@@ -1,8 +1,16 @@
 import React from "react";
 import axios from "axios";
-import { Header, Table, Rating, Button, Tab, Icon } from "semantic-ui-react";
+import {
+  Header,
+  Table,
+  Rating,
+  Button,
+  Tab,
+  Icon,
+  ButtonContent,
+} from "semantic-ui-react";
 
-const TableRow = ({result, setMode, setRefresh}) => {
+const TableRow = ({ result, setMode, setRefresh }) => {
   const { id, url, clicks, comments, tags, rating } = result;
   const urlString = `http://${url}`;
   const tagsString = tags.map((tag) => tag.name).join(", ");
@@ -15,18 +23,20 @@ const TableRow = ({result, setMode, setRefresh}) => {
     });
   };
 
-  const handleEdit = (event) => {
-    const id = event.target.id
-    setMode({mode: true, rowId: id})
-  }
+  const handleEdit = (event, data) => {
+    const id = data.id;
+    setMode({ mode: true, rowId: id });
+  };
 
   return (
     <Table.Row key={id}>
       <Table.Cell>
-        <Button 
-        icon="edit"
-        id={id}
-        onClick={handleEdit}/>
+        <Button animated="vertical" onClick={handleEdit} id={id}>
+          <Button.Content hidden>{"Edit"}</Button.Content>
+          <Button.Content id={id} visible>
+            <Icon name={"edit"} />
+          </Button.Content>
+        </Button>
       </Table.Cell>
       <Table.Cell>
         <Header

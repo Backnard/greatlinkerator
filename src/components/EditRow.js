@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Header, Table, Rating, Button, Tab, Icon } from "semantic-ui-react";
+import { Header, Table, Rating, Button, Icon, Form, Input } from "semantic-ui-react";
 
 const EditRow = ({ result, setMode, setRefresh }) => {
   const [input, setInput] = useState({});
@@ -15,17 +15,6 @@ const EditRow = ({ result, setMode, setRefresh }) => {
     });
   };
 
-  const handleUpdate = async (event, data) => {
-    const { name, clicks, id } = data;
-    console.log("Clicked edit. : ", name, clicks);
-    axios.patch(`/api/links/${id}`, { clicks: 252 }).then((res) => {
-      setRefresh(true);
-      return res.data.data.clicks;
-    });
-
-    console.log("Clicked edit button. data: ", data.data);
-  };
-
   const handleInput = (event) => {
     const { name, value } = event.target;
 
@@ -34,12 +23,12 @@ const EditRow = ({ result, setMode, setRefresh }) => {
 
   const handleEdit = (event, data) => {
     const id = data.id;
-    
+
     setMode({ mode: false, rowId: id });
     console.log("input: ", input);
     try {
-      if (!input||input=={}) {
-        console.log('Input length is empty: ',input);
+      if (!input || input == {}) {
+        console.log("Input length is empty: ", input);
         return;
       }
       axios.patch(`/api/links/${id}`, input).then((res) => {
@@ -48,40 +37,39 @@ const EditRow = ({ result, setMode, setRefresh }) => {
         // return res.data.data;
       });
       setRefresh(true);
-      
     } catch (error) {
       throw error;
     }
- 
   };
 
-  const handleTags = (e) => {
+  const handleTags = (e, data) => {
     const newTagsString = e.target.value;
     const id = e.target.id;
     const tagsArray = newTagsString.split(",");
-    console.log('tagsArray: ', tagsArray, 'id:', id);
+    console.log("tagsArray: ", tagsArray, "id:", id);
     setInput({
       ...input,
       tags: tagsArray,
     });
-
   };
 
   return (
     <Table.Row key={id}>
       <Table.Cell>
-        <Button 
-        id={id} 
-        icon={"check square outline"}
-        onClick={handleEdit} />
+        <Button animated onClick={handleEdit} id={id}>
+          <Button.Content hidden>{"Submit"}</Button.Content>
+          <Button.Content visible>
+            <Icon name={"check square outline"} />
+          </Button.Content>
+        </Button>
       </Table.Cell>
       <Table.Cell>
-        <input
+        <Input
           name={"url"}
           id={id}
           onInput={handleInput}
           defaultValue={url}
-        ></input>
+        ></Input>
       </Table.Cell>
       <Table.Cell>
         <Header>{clicks}</Header>
@@ -96,22 +84,22 @@ const EditRow = ({ result, setMode, setRefresh }) => {
         />
       </Table.Cell>
       <Table.Cell>
-        <input
+        <Input
           name={"comments"}
           id={id}
           defaultValue={comments}
           onInput={handleInput}
-        ></input>
+        ></Input>
       </Table.Cell>
       <Table.Cell>
-      <input
+        <Input
           name={"tags"}
           id={id}
           // placeholder={tagsString}
           defaultValue={tagsString}
-          onInput={handleTags}>   
-          </input>
-        </Table.Cell>
+          onInput={handleTags}
+        ></Input>
+      </Table.Cell>
     </Table.Row>
   );
 };
