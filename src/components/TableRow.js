@@ -31,7 +31,7 @@ const TableRow = ({ result, setMode, setRefresh }) => {
   return (
     <Table.Row key={id}>
       <Table.Cell>
-        <Button animated="vertical" onClick={handleEdit} id={id}>
+        <Button animated onClick={handleEdit} id={id}>
           <Button.Content hidden>{"Edit"}</Button.Content>
           <Button.Content id={id} visible>
             <Icon name={"edit"} />

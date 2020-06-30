@@ -46,7 +46,6 @@ const searchBar = ({ results, setResults, setRefresh }) => {
           <Icon name='search' />
           Find Links
         </Header>
-
         <Search 
           placeholder='Search links...'
           onSearchChange={ handleLinkChange } />

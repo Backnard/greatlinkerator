@@ -45,6 +45,7 @@ const handleClick = (event) =>{
             ?<>
             <AddNewLink
                 setRefresh={setRefresh}/>
+                <br/>
                 <Button primary
             onClick={handleClick}>Hide</Button>
             </>

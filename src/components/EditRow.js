@@ -33,8 +33,6 @@ const EditRow = ({ result, setMode, setRefresh }) => {
       }
       axios.patch(`/api/links/${id}`, input).then((res) => {
         console.log("tag updated: ", res.data.data);
-        // setRefresh(true);
-        // return res.data.data;
       });
       setRefresh(true);
     } catch (error) {
@@ -42,7 +40,9 @@ const EditRow = ({ result, setMode, setRefresh }) => {
     }
   };
 
-  const handleTags = (e, data) => {
+
+
+  const handleTags = (e) => {
     const newTagsString = e.target.value;
     const id = e.target.id;
     const tagsArray = newTagsString.split(",");
@@ -51,15 +51,31 @@ const EditRow = ({ result, setMode, setRefresh }) => {
       ...input,
       tags: tagsArray,
     });
-  };
+  }
+   const handleDelete = (event, data)=> {
+     const id=data.id
 
+      axios.delete(`/api/links/${id}`)
+      .then((response) => {
+        console.log(response.data.data);
+        setRefresh(true);
+      })
+}
+  
+  
   return (
     <Table.Row key={id}>
       <Table.Cell>
-        <Button animated onClick={handleEdit} id={id}>
+        <Button animated="vertical" onClick={handleEdit} id={id}>
           <Button.Content hidden>{"Submit"}</Button.Content>
           <Button.Content visible>
             <Icon name={"check square outline"} />
+          </Button.Content>
+        </Button>
+        <Button animated="vertical" onClick={handleDelete} id={id}>
+          <Button.Content hidden>{"Delete"}</Button.Content>
+          <Button.Content visible>
+            <Icon name={"delete"} />
           </Button.Content>
         </Button>
       </Table.Cell>
@@ -95,7 +111,6 @@ const EditRow = ({ result, setMode, setRefresh }) => {
         <Input
           name={"tags"}
           id={id}
-          // placeholder={tagsString}
           defaultValue={tagsString}
           onInput={handleTags}
         ></Input>

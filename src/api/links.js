@@ -5,7 +5,8 @@ const { getAllLinks,
         createLinkTags, 
         updateLink,
         getLinkByTag,
-        updateClickCount } = require("../db");
+        updateClickCount,
+        deleteLink } = require("../db");
 const linkRouter = express.Router();
 const bodyparser = require('body-parser');
 linkRouter.use(bodyparser.json());
@@ -115,6 +116,22 @@ linkRouter.get('/:tag', async (req, res, next)=>{
         next(error);
     }
 
+})
+
+linkRouter.delete('/:id', async(req, res, next)=>{
+
+    console.log('Entered /links DELETE');
+    const { id } = req.params;
+    try {
+        const link = await deleteLink(id);
+        res.send({
+            message: 'Successfully deleted link',
+            data: link,
+            status: true
+        })
+    } catch (error) {
+        next(error);
+    }
 })
 
 module.exports = linkRouter;

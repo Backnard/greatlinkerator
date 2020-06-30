@@ -50,7 +50,6 @@ async function updateLink(linkId, fields = {}) {
 
   const { setString, queryString } = await createQueryStrings(fields);
 
-
   try {
     if (setString.length > 0) {
       await db.query(
@@ -73,7 +72,6 @@ async function updateLink(linkId, fields = {}) {
       const tagList = await createTags(tags);
       const tagListIdString = tagList.map((tag) => `${tag.id}`).join(", ");
       console.log("Successfully updated tags:", tagList, 'tag ID string', tagListIdString);
-
 
       await db.query(`
       DELETE FROM links_tags
@@ -214,6 +212,8 @@ async function getAllLinks() {
 }
 
 async function deleteLink(linkId) {
+
+  console.log('Entered db DELETE LINKS with id: ', linkId);
   try {
     const { rows: linkTags } = await db.query(`
         DELETE FROM links_tags

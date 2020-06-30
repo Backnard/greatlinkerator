@@ -149,7 +149,6 @@ const SortTable = ({
       <Button onClick={sortByUrl}>Sort by url</Button>
       <Button onClick={sortByClicks}>Sort by Clicks</Button>
       <Button onClick={sortByRating}>Sort by Rating</Button>
-
       <Button onClick={sortByComments}>Sort by Comments</Button>
       <Button onClick={sortByTags}>Sort by Tags</Button>
       </Button.Group>

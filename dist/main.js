@@ -84067,8 +84067,7 @@ const AddNewLink = ({
     fluid: true,
     label: "URL",
     placeholder: "www.YOUR_URL.com",
-    name: "url" //   value = {url}
-    ,
+    name: "url",
     onChange: handleURL
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Input, {
     fluid: true,
@@ -84080,7 +84079,7 @@ const AddNewLink = ({
   }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Form"].Input, {
     fluid: true,
     label: "tags",
-    placeholder: "Seperate tags by comma (,)",
+    placeholder: "Separate tags by comma (,)",
     name: "tags",
     value: tags,
     onChange: handleTags
@@ -84160,8 +84159,7 @@ const EditRow = ({
       }
 
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.patch(`/api/links/${id}`, input).then(res => {
-        console.log("tag updated: ", res.data.data); // setRefresh(true);
-        // return res.data.data;
+        console.log("tag updated: ", res.data.data);
       });
       setRefresh(true);
     } catch (error) {
@@ -84169,7 +84167,7 @@ const EditRow = ({
     }
   };
 
-  const handleTags = (e, data) => {
+  const handleTags = e => {
     const newTagsString = e.target.value;
     const id = e.target.id;
     const tagsArray = newTagsString.split(",");
@@ -84179,10 +84177,18 @@ const EditRow = ({
     });
   };
 
+  const handleDelete = (event, data) => {
+    const id = data.id;
+    axios__WEBPACK_IMPORTED_MODULE_1___default.a.delete(`/api/links/${id}`).then(response => {
+      console.log(response.data.data);
+      setRefresh(true);
+    });
+  };
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Row, {
     key: id
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-    animated: true,
+    animated: "vertical",
     onClick: handleEdit,
     id: id
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"].Content, {
@@ -84191,6 +84197,16 @@ const EditRow = ({
     visible: true
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Icon"], {
     name: "check square outline"
+  }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
+    animated: "vertical",
+    onClick: handleDelete,
+    id: id
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"].Content, {
+    hidden: true
+  }, "Delete"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"].Content, {
+    visible: true
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Icon"], {
+    name: "delete"
   })))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Input"], {
     name: "url",
     id: id,
@@ -84209,8 +84225,7 @@ const EditRow = ({
     onInput: handleInput
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Input"], {
     name: "tags",
-    id: id // placeholder={tagsString}
-    ,
+    id: id,
     defaultValue: tagsString,
     onInput: handleTags
   })));
@@ -84341,7 +84356,7 @@ const SegmentGrid = ({
     setRefresh: setRefresh
   })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Grid"].Column, null, showForm ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AddNewLink__WEBPACK_IMPORTED_MODULE_3__["default"], {
     setRefresh: setRefresh
-  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
+  }), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Button"], {
     primary: true,
     onClick: handleClick
   }, "Hide")) : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_1__["Header"], {
@@ -84601,7 +84616,7 @@ const TableRow = ({
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Row, {
     key: id
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Table"].Cell, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"], {
-    animated: "vertical",
+    animated: true,
     onClick: handleEdit,
     id: id
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(semantic_ui_react__WEBPACK_IMPORTED_MODULE_2__["Button"].Content, {

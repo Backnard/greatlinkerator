@@ -59,14 +59,13 @@ const handleTags = (e) => {
     <Form.Group widths='equal'>
       <Form.Input fluid label='URL' placeholder='www.YOUR_URL.com'
       name='url'
-    //   value = {url}
       onChange={handleURL} />
       <Form.Input fluid label='Comments' placeholder='I love this site...' 
       name='comment'
       value={comment}
       onChange={handleComments} />
       <Form.Input fluid label='tags'
-      placeholder='Seperate tags by comma (,)'
+      placeholder='Separate tags by comma (,)'
       name='tags'
       value={tags}
       onChange={handleTags} />
